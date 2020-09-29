@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 from sklearn.metrics import silhouette_score
+from math import sqrt, pow
 
 
 def get_sink_node_path():
@@ -73,8 +74,7 @@ for i in range(no_of_nodes):
 
 
 def get_distance(x, y):
-    return sqrt((x[0]-y[0]) **
-                2 + (x[1]-y[1])**2)
+    return sqrt( pow((x[0]-y[0]), 2) + pow((x[1]-y[1]), 2))
 
 
 def get_energy_of_tramission(sink_node, cluster_node):
