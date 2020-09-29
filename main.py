@@ -112,4 +112,3 @@ for i in range(len(sink_node[0])):
       min_dist = dist
       cluster_no = j 
   print(get_optimal_node(present_sink_node,cluster_no))
-
