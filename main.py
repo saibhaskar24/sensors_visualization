@@ -51,3 +51,65 @@ plt.scatter(sink_node[0], sink_node[1], s=50, c='orange', label =f'Sink Node')
 plt.legend()
 plt.tight_layout()
 plt.show()
+
+
+
+
+
+
+
+no_of_nodes = len(X)
+energies = {}
+for i in X:
+    energies[tuple(i)] = 5
+# print(energies)
+cluster_matrix = [[] for i in range(ncluster)]
+for i in range(no_of_nodes):
+  cluster_matrix[y[i]].append(X[i])
+
+
+
+
+
+
+def get_distance(x, y):
+    return sqrt((x[0]-y[0]) **
+                2 + (x[1]-y[1])**2)
+
+
+def get_energy_of_tramission(sink_node, cluster_node):
+    data_agg_energy = 5 * 10 ** -9
+    tx_fs_energy = 10 * 10 ** -12
+    tx_energy = 50 * 10 ** -9
+    distance = get_distance(sink_node, cluster_node)
+    return (5000*(tx_energy+data_agg_energy)-(5000*tx_fs_energy*(distance**2)))
+
+
+
+def get_optimal_node(sink_node, min_dist_cluster_no):
+    tx_energy = {}
+    max_energy = -1
+    for i in cluster_matrix[min_dist_cluster_no]:
+        tx_energy[tuple(i)] = get_energy_of_tramission(sink_node, i)
+        max_energy = max(max_energy, energies[tuple(i)])
+    optimalNode = []
+    min_tx_energy = 10000000000000000000
+    for i in tx_energy:
+        if energies[i] == max_energy:
+            if min_tx_energy >= tx_energy[i]:
+                optimalNode = list(i)
+                min_tx_energy = tx_energy[i]
+    energies[tuple(optimalNode)] -= min_tx_energy
+    return optimalNode
+
+for i in range(len(sink_node[0])):
+  present_sink_node = [sink_node[0][i],sink_node[1][i]]
+  min_dist = 10000000000000
+  cluster_no = -1
+  for j in range(ncluster):
+    dist  = get_distance(present_sink_node, centroids[j])
+    if min_dist>=dist:
+      min_dist = dist
+      cluster_no = j 
+  print(get_optimal_node(present_sink_node,cluster_no))
+
