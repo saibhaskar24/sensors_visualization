@@ -4,7 +4,7 @@ import matplotlib.patches as mpatches
 import numpy as np
 from sklearn.metrics import silhouette_score
 from math import sqrt, pow
-
+from celluloid import Camera
 
 def get_sink_node_path():
     y = [y for y in range(0,40)]
@@ -40,20 +40,24 @@ for cluster in range(ncluster):
     clusters_radii[cluster] = max([np.linalg.norm(np.subtract(i,clusters_centroids[cluster])) for i in zip(X[y == cluster, 0],X[y == cluster, 1])])
 print("Centroids :", clusters_centroids)
 print("Redii's :", clusters_radii)
+
 fig, ax = plt.subplots(1,figsize=(7,5))
-for i in range(ncluster):
-    plt.scatter(X[y==i, 0], X[y==i, 1], s=100, c=col[i], label =f'Cluster {i + 1}')
-    art = mpatches.Circle(clusters_centroids[i],clusters_radii[i], edgecolor=col[i],fill=False)
-    ax.add_patch(art)
-plt.scatter(centroids[:,0],centroids[:,1],s=200, c='red', label = 'Centroids',marker = 'x')
 sink_node = get_sink_node_path()
 print("Sink Node :\nX :",sink_node[0], "\nY :", sink_node[1])
-plt.scatter(sink_node[0], sink_node[1], s=50, c='orange', label =f'Sink Node')
+
+def drawclusters():
+    for i in range(ncluster):
+        plt.scatter(X[y==i, 0], X[y==i, 1], s=100, c=col[i], label =f'Cluster {i + 1}')
+        art = mpatches.Circle(clusters_centroids[i],clusters_radii[i], edgecolor=col[i],fill=False)
+        ax.add_patch(art)
+    plt.scatter(centroids[:,0],centroids[:,1],s=200, c='red', label = 'Centroids',marker = 'x')
+    plt.scatter(sink_node[0], sink_node[1], s=50, c='orange', label =f'Sink Node')
+drawclusters()
 plt.legend()
 plt.tight_layout()
 # plt.show()
 
-
+camera = Camera(fig)
 
 
 
@@ -112,8 +116,11 @@ for i in range(len(sink_node[0])):
       min_dist = dist
       cluster_no = j 
   optimal_point = get_optimal_node(present_sink_node,cluster_no)
+  drawclusters()
   ax.arrow(present_sink_node[0], present_sink_node[1], optimal_point[0] - present_sink_node[0], optimal_point[1] - present_sink_node[1],width=0.02,color='red',head_length=0.0,head_width=0.0)
-  print(present_sink_node, optimal_point, cluster_no)
-  plt.pause(0.0001)
-  plt.clf()
+#   print(present_sink_node, optimal_point, cluster_no)
+  camera.snap()
+  
+animation = camera.animate()
+animation.save("m.mp4")
 plt.show()
