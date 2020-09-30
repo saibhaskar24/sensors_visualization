@@ -18,9 +18,9 @@ def plot_silh(X):
         KM.fit(X)
         lables = KM.labels_
         sil.append(silhouette_score(X,lables,metric='euclidean'))
-    plt.clf()
-    plt.plot(range(2,10),sil)
-    plt.draw()
+    # plt.clf()
+    # plt.plot(range(2,10),sil)
+    # plt.draw()
     print(sil.index(max(sil))+2)
     print(sil)
     return sil.index(max(sil))+2
@@ -51,7 +51,7 @@ print("Sink Node :\nX :",sink_node[0], "\nY :", sink_node[1])
 plt.scatter(sink_node[0], sink_node[1], s=50, c='orange', label =f'Sink Node')
 plt.legend()
 plt.tight_layout()
-plt.show()
+# plt.show()
 
 
 
@@ -111,4 +111,9 @@ for i in range(len(sink_node[0])):
     if min_dist>=dist:
       min_dist = dist
       cluster_no = j 
-  print(get_optimal_node(present_sink_node,cluster_no))
+  optimal_point = get_optimal_node(present_sink_node,cluster_no)
+  ax.arrow(present_sink_node[0], present_sink_node[1], optimal_point[0] - present_sink_node[0], optimal_point[1] - present_sink_node[1],width=0.02,color='red',head_length=0.0,head_width=0.0)
+  print(present_sink_node, optimal_point, cluster_no)
+  plt.pause(0.0001)
+  plt.clf()
+plt.show()
