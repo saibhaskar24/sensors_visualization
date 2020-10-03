@@ -72,6 +72,9 @@ for i in range(len(sink_node[0])):
   drawclusters()
 #   print(present_sink_node, optimal_point, cluster_no)
   ax.arrow(present_sink_node[0], present_sink_node[1], optimal_point[0] - present_sink_node[0], optimal_point[1] - present_sink_node[1],width=0.02,color='red',head_length=0.0,head_width=0.0)
+  ax.scatter(present_sink_node[0], present_sink_node[1], s=50, c='red')
+  ax.scatter(optimal_point[0], optimal_point[1], s=50, c='red')
+
   camera.snap()
   
 animation = camera.animate()

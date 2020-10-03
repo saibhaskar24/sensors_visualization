@@ -31,7 +31,7 @@ def primMST(n,g):
         key[0] = 0
         mstSet = [False] * n
         parent[0] = -1
-        for cout in range(n):
+        for _ in range(n):
             u = minKey(key, mstSet,n)
             mstSet[u] = True
             for v in range(n):
