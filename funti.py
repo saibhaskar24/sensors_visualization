@@ -2,6 +2,7 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 from math import sqrt, pow
 import numpy as np
+from scipy.interpolate import make_interp_spline, BSpline
 
 
 def getpathpoints(parent,n,g,centroids):
@@ -46,14 +47,42 @@ def primMST(n,g):
 #     return [x,y]
 
 
-def get_sink_node_path(centroids, n):
-    graph = creategraph(centroids, n)
-    # print(graph)
-    parent = primMST(n,graph)
-    # print(parent)
-    return getpathpoints(parent,n,graph,centroids)
+# def get_sink_node_path(centroids, n):
+#     graph = creategraph(centroids, n)
+#     # print(graph)
+#     parent = primMST(n,graph)
+#     # print(parent)
+#     return getpathpoints(parent,n,graph,centroids)
 
 
+
+def get_sink_node_path(X, n):
+    x1, x2, y = 1000000000, -1, -1
+    for i in X:
+        if i[0] <= x1:
+            x1 = i[0]
+        if i[0] >= x2:
+            x2 = i[0]
+        if i[1] > y:
+            y = i[1]
+    listOfPoints = [[x1-4, y], [x1, y+4], [x2, y+4], [x2+4, y]]
+    # print(listOfPoints)
+    listOfPoints.sort()
+    print(listOfPoints)
+    x_coOrdinates = []
+    y_coOrdinates = []
+    for i in listOfPoints:
+        x_coOrdinates.append(i[0])
+        y_coOrdinates.append(i[1])
+
+    x_coOrdinates = np.array(x_coOrdinates)
+    y_coOrdinates = np.array(y_coOrdinates)
+    print(x_coOrdinates)
+    print(y_coOrdinates)
+    sinkNode_x = np.linspace(x_coOrdinates.min(), x_coOrdinates.max(), 30)
+    spl = make_interp_spline(x_coOrdinates, y_coOrdinates, k=2)
+    sinkNode_y = spl(sinkNode_x)
+    return [sinkNode_x,sinkNode_y]
 
 
 
