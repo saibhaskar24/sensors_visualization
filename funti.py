@@ -63,11 +63,12 @@ def get_sink_node_path(X, n):
     x1, x2, y = [10000000000, 1000000000000], [-1, -1], [-1, -1]
     for i in X:
         if i[0] <= x1[0]:
-            x1 = i
+            x1 = list(i)
         if i[0] >= x2[0]:
-            x2 = i
+            x2 = list(i)
         if i[1] > y[1]:
-            y = i
+            y = list(i)
+    y[0] += 1
     listOfPoints = [x1, x2, y]
     # print(listOfPoints)
     listOfPoints.sort()
