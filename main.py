@@ -5,7 +5,7 @@ from funti import *
 
 
 col = ['blue', 'green', 'c', 'm', 'y', 'k', "violet", "indigo"]
-X = np.array([[28, 7], [36, 5], [32, 2], [56, 8], [47, 5],
+X = np.array([[28, 7], [36, 5], [32, 2], [56, 8], [47, 5], [50,100], [100,100],
               [75, 9], [34, 4], [56, 9], [28, 1], [33, 6]])
 ncluster = plot_silh(X)
 kmeans = KMeans(n_clusters=ncluster, max_iter=500).fit(X)
@@ -45,39 +45,39 @@ def drawclusters():
 drawclusters()
 plt.legend()
 plt.tight_layout()
-plt.show()
+# plt.show()
 
-# camera = Camera(fig)
-
-
-# no_of_nodes = len(X)
-# energies = {}
-# for i in X:
-#     energies[tuple(i)] = 5
-# # print(energies)
-# cluster_matrix = [[] for i in range(ncluster)]
-# for i in range(no_of_nodes):
-#   cluster_matrix[y[i]].append(X[i])
+camera = Camera(fig)
 
 
-# for i in range(len(sink_node[0])):
-#   present_sink_node = [sink_node[0][i],sink_node[1][i]]
-#   min_dist = 10000000000000
-#   cluster_no = -1
-#   for j in range(ncluster):
-#     dist  = get_distance(present_sink_node, centroids[j])
-#     if min_dist>=dist:
-#       min_dist = dist
-#       cluster_no = j
-#   optimal_point = get_optimal_node(present_sink_node,cluster_no, cluster_matrix, energies)
-#   drawclusters()
-# #   print(present_sink_node, optimal_point, cluster_no)
-#   ax.arrow(present_sink_node[0], present_sink_node[1], optimal_point[0] - present_sink_node[0], optimal_point[1] - present_sink_node[1],width=0.02,color='red',head_length=0.0,head_width=0.0)
-#   ax.scatter(present_sink_node[0], present_sink_node[1], s=50, c='red')
-#   ax.scatter(optimal_point[0], optimal_point[1], s=50, c='red')
+no_of_nodes = len(X)
+energies = {}
+for i in X:
+    energies[tuple(i)] = 5
+# print(energies)
+cluster_matrix = [[] for i in range(ncluster)]
+for i in range(no_of_nodes):
+  cluster_matrix[y[i]].append(X[i])
 
-#   camera.snap()
 
-# animation = camera.animate()
-# animation.save("m.mp4")
+for i in range(len(sink_node[0])):
+  present_sink_node = [sink_node[0][i],sink_node[1][i]]
+  min_dist = 10000000000000
+  cluster_no = -1
+  for j in range(ncluster):
+    dist  = get_distance(present_sink_node, centroids[j])
+    if min_dist>=dist:
+      min_dist = dist
+      cluster_no = j
+  optimal_point = get_optimal_node(present_sink_node,cluster_no, cluster_matrix, energies)
+  drawclusters()
+#   print(present_sink_node, optimal_point, cluster_no)
+  ax.arrow(present_sink_node[0], present_sink_node[1], optimal_point[0] - present_sink_node[0], optimal_point[1] - present_sink_node[1],width=0.02,color='red',head_length=0.0,head_width=0.0)
+  ax.scatter(present_sink_node[0], present_sink_node[1], s=50, c='red')
+  ax.scatter(optimal_point[0], optimal_point[1], s=50, c='red')
+
+  camera.snap()
+
+animation = camera.animate()
+animation.save("m.mp4")
 # plt.show()

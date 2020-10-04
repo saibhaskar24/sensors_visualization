@@ -82,6 +82,8 @@ def get_sink_node_path(X, n):
     sinkNode_x = np.linspace(x_coOrdinates.min(), x_coOrdinates.max(), 30)
     spl = make_interp_spline(x_coOrdinates, y_coOrdinates, k=2)
     sinkNode_y = spl(sinkNode_x)
+    print("x: ", sinkNode_x)
+    print("y: ", sinkNode_y)
     return [sinkNode_x,sinkNode_y]
 
 
