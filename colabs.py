@@ -73,8 +73,4 @@ for i in range(len(sink_node[0])):
   ax.scatter(present_sink_node[0], present_sink_node[1], s=50, c='red')
   ax.scatter(optimal_point[0], optimal_point[1], s=50, c='red')
 
-#   camera.snap()
-
-# animation = camera.animate()
-# animation.save("m.mp4")
 plt.show()
