@@ -60,18 +60,23 @@ def primMST(n, g):
 
 
 def get_sink_node_path(X, n):
-    x1, x2, y1,y2 = 10000000000,-1,10000000000000,-1
+    x1, x2, y = [10000000000, -1], [-1, -1], [-1, -1]
     for i in X:
-        if i[0] <= x1:
-            x1 = i[0]
-        if i[0] >= x2:
-            x2 = i[0]
-        if i[1] <= y1:
-            y1 = i[1]
-        if i[1] >= y2:
-            y2 = i[1]
+        if i[0] <= x1[0]:
+            x1 = list(i)
+        if i[0] >= x2[0]:
+            x2 = list(i)
+        if i[1] >= y[1]:
+            y = list(i)
+    x1[0] -= 3
+    x2[0] += 3
+    y[1] += 3
+    if x1[0] == y[0]:
+        y[0] += 1
+    if y[0] == x2[0]:
+        y[0] += 1
 
-    listOfPoints = [[x1-2,y1],[x1,y2+1],[x2,y2+1],[x2+2,y1]]
+    listOfPoints = [x1, x2, y]
     # print(listOfPoints)
     listOfPoints.sort()
     print(listOfPoints)
@@ -88,6 +93,9 @@ def get_sink_node_path(X, n):
     sinkNode_x = np.linspace(x_coOrdinates.min(), x_coOrdinates.max(), 30)
     spl = make_interp_spline(x_coOrdinates, y_coOrdinates, k=2)
     sinkNode_y = spl(sinkNode_x)
+    for i in range(30):
+        sinkNode_x[i] = round(sinkNode_x[i], 3)
+        sinkNode_y[i] = round(sinkNode_y[i], 3)
     print("x: ", sinkNode_x)
     print("y: ", sinkNode_y)
     return [sinkNode_x, sinkNode_y]
