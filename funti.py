@@ -60,23 +60,18 @@ def primMST(n, g):
 
 
 def get_sink_node_path(X, n):
-    x1, x2, y = [10000000000, 1000000000000], [-1, -1], [-1, -1]
+    x1, x2, y1,y2 = 10000000000,-1,10000000000000,-1
     for i in X:
-        if i[0] <= x1[0]:
-            x1 = list(i)
-        if i[0] >= x2[0]:
-            x2 = list(i)
-        if i[1] > y[1]:
-            y = list(i)
-    x1[0] -= 2
-    x2[0] += 2
-    y[1] += 1
-    if x1[0] == y[0]:
-        y[0] += 1
-    if x2[0] == y[0]:
-        y[0] += 1
+        if i[0] <= x1:
+            x1 = i[0]
+        if i[0] >= x2:
+            x2 = i[0]
+        if i[1] <= y1:
+            y1 = i[1]
+        if i[1] >= y2:
+            y2 = i[1]
 
-    listOfPoints = [x1, x2, y]
+    listOfPoints = [[x1-2,y1],[x1,y2+1],[x2,y2+1],[x2+2,y1]]
     # print(listOfPoints)
     listOfPoints.sort()
     print(listOfPoints)
