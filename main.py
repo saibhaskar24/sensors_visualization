@@ -5,7 +5,7 @@ from funti import *
 
 
 col = ['blue', 'green', 'c', 'm', 'y', 'k', "violet", "indigo"]
-X = np.array([[28, 7], [36, 5], [32, 2], [56, 8], [47, 5], [50,100], [100,100],
+X = np.array([[28, 7], [36, 5], [32, 2], [56, 8], [47, 5], [50,100], [100,100], [26,59], [19,71],
               [75, 9], [34, 4], [56, 9], [28, 1], [33, 6]])
 ncluster = plot_silh(X)
 kmeans = KMeans(n_clusters=ncluster, max_iter=500).fit(X)
@@ -78,6 +78,6 @@ for i in range(len(sink_node[0])):
 
   camera.snap()
 
-animation = camera.animate()
-animation.save("m.mp4")
-# plt.show()
+# animation = camera.animate()
+# animation.save("m.mp4")
+plt.show()
