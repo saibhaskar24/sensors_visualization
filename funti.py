@@ -3,7 +3,7 @@ from sklearn.metrics import silhouette_score
 from math import sqrt, pow
 import numpy as np
 from scipy.interpolate import make_interp_spline, BSpline
-
+from scipy.spatial import ConvexHull
 
 def getpathpoints(parent, n, g, centroids):
     path = [[], []]
