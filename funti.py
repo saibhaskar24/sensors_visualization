@@ -60,6 +60,19 @@ def primMST(n, g):
 #     return getpathpoints(parent,n,graph,centroids)
 
 
+def geteratepointsinbetween(p1,p2):
+    frames = np.linspace(0, 1, num=int(get_distance(p1, p2)//3))
+    path = [[], []]
+    for t in frames:
+        x = p1[0] + \
+            (p2[0]- p1[0]) * t
+        y = p1[1] + \
+            (p2[1]- p1[1]) * t
+        path[0].append(x)
+        path[1].append(y)
+    return path
+
+
 def get_sink_node_path(X, n):
     x1, x2, y2, y1 = [10000000000, -1], [-1, -
                                          1], [-1, -1], [-1, 10000000000000]
@@ -84,27 +97,27 @@ def get_sink_node_path(X, n):
     listOfPoints = [x1, x2, y2]
     # print(listOfPoints)
     listOfPoints.sort()
-    print(listOfPoints)
     x_coOrdinates = []
     y_coOrdinates = []
     for i in listOfPoints:
         x_coOrdinates.append(i[0])
         y_coOrdinates.append(i[1])
-    print(p1, p2)
     x_coOrdinates = np.array(x_coOrdinates)
     y_coOrdinates = np.array(y_coOrdinates)
-    print(x_coOrdinates)
-    print(y_coOrdinates)
-    sinkNode_x = np.linspace(x_coOrdinates.min(), x_coOrdinates.max(), 30)
+    sinkNode_x = np.linspace(x_coOrdinates.min(), x_coOrdinates.max(), 50)
     spl = make_interp_spline(x_coOrdinates, y_coOrdinates, k=2)
     sinkNode_y = spl(sinkNode_x)
-    for i in range(30):
+    for i in range(50):
         sinkNode_x[i] = round(sinkNode_x[i], 3)
         sinkNode_y[i] = round(sinkNode_y[i], 3)
     sinkNode_x = list(sinkNode_x)
     sinkNode_y = list(sinkNode_y)
-    sinkNode_x.insert(0, p1[0])
-    sinkNode_y.insert(0, p1[1])
+    gen = geteratepointsinbetween([sinkNode_x[0],sinkNode_y[0]],p1)
+    sinkNode_x = gen[0] + sinkNode_x
+    sinkNode_y = gen[1] + sinkNode_y
+    gen = geteratepointsinbetween([sinkNode_x[-1],sinkNode_y[-1]],p2)
+    sinkNode_x = sinkNode_x + gen[0]
+    sinkNode_y = sinkNode_y + gen[1]
     sinkNode_x.append(p2[0])
     sinkNode_y.append(p2[1])
     print("x: ", sinkNode_x)
