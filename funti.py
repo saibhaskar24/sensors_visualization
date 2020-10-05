@@ -60,23 +60,27 @@ def primMST(n, g):
 
 
 def get_sink_node_path(X, n):
-    x1, x2, y = [10000000000, -1], [-1, -1], [-1, -1]
+    x1, x2, y2, y1 = [10000000000, -1], [-1, -
+                                         1], [-1, -1], [-1, 10000000000000]
     for i in X:
         if i[0] <= x1[0]:
             x1 = list(i)
         if i[0] >= x2[0]:
             x2 = list(i)
-        if i[1] >= y[1]:
-            y = list(i)
+        if i[1] >= y2[1]:
+            y2 = list(i)
+        if i[1] <= y1[1]:
+            y1 = list(i)
     x1[0] -= 3
     x2[0] += 3
-    y[1] += 3
-    if x1[0] == y[0]:
-        y[0] += 1
-    if y[0] == x2[0]:
-        y[0] += 1
+    y2[1] += 3
+    p1, p2 = [x1[0], (x1[1]+y1[1])//2], [x2[0], (x2[1]+y1[1])//2]
+    if x1[0] == y2[0]:
+        y2[0] += 1
+    if y2[0] == x2[0]:
+        y2[0] += 1
 
-    listOfPoints = [x1, x2, y]
+    listOfPoints = [x1, x2, y2]
     # print(listOfPoints)
     listOfPoints.sort()
     print(listOfPoints)
@@ -85,7 +89,7 @@ def get_sink_node_path(X, n):
     for i in listOfPoints:
         x_coOrdinates.append(i[0])
         y_coOrdinates.append(i[1])
-
+    print(p1, p2)
     x_coOrdinates = np.array(x_coOrdinates)
     y_coOrdinates = np.array(y_coOrdinates)
     print(x_coOrdinates)
@@ -96,6 +100,10 @@ def get_sink_node_path(X, n):
     for i in range(30):
         sinkNode_x[i] = round(sinkNode_x[i], 3)
         sinkNode_y[i] = round(sinkNode_y[i], 3)
+    np.append(sinkNode_x, p1[0])
+    np.append(sinkNode_x, p2[0])
+    np.append(sinkNode_y, p1[1])
+    np.append(sinkNode_y, p2[1])
     print("x: ", sinkNode_x)
     print("y: ", sinkNode_y)
     return [sinkNode_x, sinkNode_y]
