@@ -5,6 +5,7 @@ import numpy as np
 from scipy.interpolate import make_interp_spline, BSpline
 from scipy.spatial import ConvexHull
 
+
 def getpathpoints(parent, n, g, centroids):
     path = [[], []]
     # print( "Edge \tWeight")
@@ -100,10 +101,12 @@ def get_sink_node_path(X, n):
     for i in range(30):
         sinkNode_x[i] = round(sinkNode_x[i], 3)
         sinkNode_y[i] = round(sinkNode_y[i], 3)
-    np.append(sinkNode_x, p1[0])
-    np.append(sinkNode_x, p2[0])
-    np.append(sinkNode_y, p1[1])
-    np.append(sinkNode_y, p2[1])
+    sinkNode_x = list(sinkNode_x)
+    sinkNode_y = list(sinkNode_y)
+    sinkNode_x.insert(0, p1[0])
+    sinkNode_y.insert(0, p1[1])
+    sinkNode_x.append(p2[0])
+    sinkNode_y.append(p2[1])
     print("x: ", sinkNode_x)
     print("y: ", sinkNode_y)
     return [sinkNode_x, sinkNode_y]
