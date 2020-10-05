@@ -30,11 +30,12 @@ sink_node = get_sink_node_path(X, len(X))     # sink node creation
 
 def drawclusters():
     for i in range(ncluster):
-        plt.scatter(X[y == i, 0], X[y == i, 1], s=100,
-                    c=col[i], label=f'Cluster {i + 1}')
-        art = mpatches.Circle(
-            clusters_centroids[i], clusters_radii[i], edgecolor=col[i], fill=False)
-        ax.add_patch(art)
+        points = X[y == i]
+        ax.scatter(points[:, 0], points[:, 1], s=100, c=col[i], label=f'Cluster {i + 1}')
+        hull = ConvexHull(points)
+        vert = np.append(hull.vertices, hull.vertices[0])  # close the polygon by appending the first point at the end
+        ax.plot(points[vert, 0], points[vert, 1], '--', c=col[i])
+        ax.fill(points[vert, 0], points[vert, 1], c=col[i], alpha=0.2)
     plt.scatter(centroids[:, 0], centroids[:, 1], s=200,
                 c='red', label='Centroids', marker='x')
     plt.scatter(sink_node[0], sink_node[1], s=50,
@@ -67,10 +68,9 @@ for i in range(len(sink_node[0])):
       min_dist = dist
       cluster_no = j
   optimal_point = get_optimal_node(present_sink_node,cluster_no, cluster_matrix, energies)
-  drawclusters()
 #   print(present_sink_node, optimal_point, cluster_no)
   ax.arrow(present_sink_node[0], present_sink_node[1], optimal_point[0] - present_sink_node[0], optimal_point[1] - present_sink_node[1],width=0.02,color='red',head_length=0.0,head_width=0.0)
   ax.scatter(present_sink_node[0], present_sink_node[1], s=50, c='red')
   ax.scatter(optimal_point[0], optimal_point[1], s=50, c='red')
-
+  drawclusters()
 plt.show()
