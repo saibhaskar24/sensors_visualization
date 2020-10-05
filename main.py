@@ -81,5 +81,7 @@ for i in range(len(sink_node[0])):
 
 camera.snap()
 animation = camera.animate()
-animation.save("m.mp4")
+print("Writing ...")
+animation.save("m.mp4",fps=1)
+print("Done")
 # plt.show()
