@@ -60,20 +60,21 @@ def primMST(n, g):
 #     return getpathpoints(parent,n,graph,centroids)
 
 
-def geteratepointsinbetween(p1,p2):
+def geteratepointsinbetween(p1, p2):
     frames = np.linspace(0, 1, num=int(get_distance(p1, p2)//5))
     path = [[], []]
     for t in frames:
         x = p1[0] + \
-            (p2[0]- p1[0]) * t
+            (p2[0] - p1[0]) * t
         y = p1[1] + \
-            (p2[1]- p1[1]) * t
+            (p2[1] - p1[1]) * t
         path[0].append(x)
         path[1].append(y)
     return path
 
 
 def get_sink_node_path(X, n):
+    temp_dist = 60
     x1, x2, y2, y1 = [10000000000, -1], [-1, -
                                          1], [-1, -1], [-1, 10000000000000]
     for i in X:
@@ -85,10 +86,12 @@ def get_sink_node_path(X, n):
             y2 = list(i)
         if i[1] <= y1[1]:
             y1 = list(i)
+
     x1[0] -= 3
     x2[0] += 3
     y2[1] += 3
     p1, p2 = [x1[0], (x1[1]+y1[1])//2], [x2[0], (x2[1]+y1[1])//2]
+    BaseStation = [(x1[0]+x2[0])//2, y2[1]+4]
     if x1[0] == y2[0]:
         y2[0] += 1
     if y2[0] == x2[0]:
@@ -112,17 +115,27 @@ def get_sink_node_path(X, n):
         sinkNode_y[i] = round(sinkNode_y[i], 3)
     sinkNode_x = list(sinkNode_x)
     sinkNode_y = list(sinkNode_y)
-    gen = geteratepointsinbetween([sinkNode_x[0],sinkNode_y[0]],p1)
+    gen = geteratepointsinbetween([sinkNode_x[0], sinkNode_y[0]], p1)
     sinkNode_x = gen[0] + sinkNode_x
     sinkNode_y = gen[1] + sinkNode_y
-    gen = geteratepointsinbetween([sinkNode_x[-1],sinkNode_y[-1]],p2)
+    gen = geteratepointsinbetween([sinkNode_x[-1], sinkNode_y[-1]], p2)
     sinkNode_x = sinkNode_x + gen[0]
     sinkNode_y = sinkNode_y + gen[1]
     sinkNode_x.append(p2[0])
     sinkNode_y.append(p2[1])
+    i = 0
+    leng = len(sinkNode_x)
+    while i < leng:
+        if get_distance(BaseStation, [sinkNode_x[i], sinkNode_y[i]]) > temp_dist:
+            sinkNode_x.pop(i)
+            sinkNode_y.pop(i)
+            leng -= 1
+        else:
+            i += 1
+
     print("x: ", sinkNode_x)
     print("y: ", sinkNode_y)
-    return [sinkNode_x, sinkNode_y]
+    return [sinkNode_x, sinkNode_y], BaseStation
 
 
 def plot_silh(X):
@@ -153,9 +166,24 @@ def get_energy_of_tramission(sink_node, cluster_node):
 
 
 def get_optimal_node(sink_node, min_dist_cluster_no, cluster_matrix, energies):
+    temp_dist = 60
     tx_energy = {}
     max_energy = -1
-    for i in cluster_matrix[min_dist_cluster_no]:
+
+    list_of_min_nodes = cluster_matrix[min_dist_cluster_no][::]
+
+    i = 0
+    leng = len(list_of_min_nodes)
+    while i < leng:
+        if get_distance(list_of_min_nodes[i], sink_node) > temp_dist:
+            list_of_min_nodes.pop(i)
+            leng -= 1
+        else:
+            i += 1
+
+    if len(list_of_min_nodes) == 0:
+        return sink_node
+    for i in list_of_min_nodes:
         tx_energy[tuple(i)] = get_energy_of_tramission(sink_node, i)
         max_energy = max(max_energy, energies[tuple(i)])
     optimalNode = []
