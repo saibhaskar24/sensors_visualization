@@ -61,7 +61,7 @@ def primMST(n, g):
 
 
 def geteratepointsinbetween(p1, p2):
-    frames = np.linspace(0, 1, num=int(get_distance(p1, p2)//5))
+    frames = np.linspace(0, 1, num=int(get_distance(p1, p2)))
     path = [[], []]
     for t in frames:
         x = p1[0] + \
@@ -107,10 +107,10 @@ def get_sink_node_path(X, n):
         y_coOrdinates.append(i[1])
     x_coOrdinates = np.array(x_coOrdinates)
     y_coOrdinates = np.array(y_coOrdinates)
-    sinkNode_x = np.linspace(x_coOrdinates.min(), x_coOrdinates.max(), 30)
+    sinkNode_x = np.linspace(x_coOrdinates.min(), x_coOrdinates.max(), 200)
     spl = make_interp_spline(x_coOrdinates, y_coOrdinates, k=2)
     sinkNode_y = spl(sinkNode_x)
-    for i in range(30):
+    for i in range(200):
         sinkNode_x[i] = round(sinkNode_x[i], 3)
         sinkNode_y[i] = round(sinkNode_y[i], 3)
     sinkNode_x = list(sinkNode_x)

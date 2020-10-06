@@ -7,6 +7,9 @@ from funti import *
 col = ['blue', 'green', 'c', 'm', 'y', 'k', "violet", "indigo"]
 X = np.array([[28, 7], [36, 5], [32, 2], [56, 8], [47, 5], [50, 100], [100, 100], [26, 59], [19, 71],
               [75, 9], [34, 4], [56, 9], [28, 1], [33, 6]])
+
+X = np.array([[49, 10], [51, 16], [53, 13], [55, 12], [91, 15], [84, 17], [92, 32], [97, 11], [63, 85], [66, 85], [68, 92], [
+             70, 86], [62, 76], [55, 78], [103, 119], [104, 110], [100, 108], [104, 105], [78, 56], [76, 58], [79, 57], [71, 46]])
 ncluster = plot_silh(X)
 kmeans = KMeans(n_clusters=ncluster, max_iter=500).fit(X)
 y = kmeans.labels_
@@ -75,17 +78,20 @@ for i in range(len(sink_node[0])):
     optimal_point = get_optimal_node(
         present_sink_node, cluster_no, cluster_matrix, energies)
 #   print(present_sink_node, optimal_point, cluster_no)
-    ax.arrow(present_sink_node[0], present_sink_node[1], optimal_point[0] - present_sink_node[0],
-             optimal_point[1] - present_sink_node[1], width=0.02, color='red', head_length=0.0, head_width=0.0)
-    ax.scatter(present_sink_node[0], present_sink_node[1], s=50, c='red')
-    ax.scatter(optimal_point[0], optimal_point[1], s=50, c='red')
+  ax.arrow(present_sink_node[0], present_sink_node[1], optimal_point[0] - present_sink_node[0], optimal_point[1] - present_sink_node[1],width=0.02,color='red',head_length=0.0,head_width=0.0)
+  ax.scatter(present_sink_node[0], present_sink_node[1], s=50, c='red')
+  ax.scatter(optimal_point[0], optimal_point[1], s=50, c='red')
+  # plt.show()
 
-    camera.snap()
-    drawclusters()
+  # camera.snap()
+  # drawclusters()
 
-camera.snap()
-animation = camera.animate()
-print("Writing ...")
-animation.save("m.mp4", fps=1)
-print("Done")
+plt.show()
+# camera.snap()
+# animation = camera.animate()
+
+# print(animation)
+# print("Writing ...")
+# animation.save("m.mp4",fps=1)
+# print("Done")
 # plt.show()
