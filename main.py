@@ -63,8 +63,9 @@ for i in X:
 # print(energies)
 cluster_matrix = [[] for i in range(ncluster)]
 for i in range(no_of_nodes):
-    cluster_matrix[y[i]].append(X[i])
+  cluster_matrix[y[i]].append(list(X[i]))
 
+tempClusterNode = [36, 5]
 
 for i in range(len(sink_node[0])):
     present_sink_node = [sink_node[0][i], sink_node[1][i]]
@@ -77,6 +78,20 @@ for i in range(len(sink_node[0])):
             cluster_no = j
     optimal_point = get_optimal_node(
         present_sink_node, cluster_no, cluster_matrix, energies)
+    optimalCluster_Cluster = []
+    if optimal_point != present_sink_node:
+        if tempClusterNode not in cluster_matrix[cluster_no]:
+            clusterPoints = cluster_matrix[cluster_no]
+            minDist = 10000000
+            # print(clusterPoints)
+            for i in clusterPoints:
+                dist = get_distance(i, tempClusterNode)
+                if minDist > dist:
+                    minDist = dist
+                    optimalCluster_Cluster = i
+            print(optimalCluster_Cluster)
+
+
 #   print(present_sink_node, optimal_point, cluster_no)
   ax.arrow(present_sink_node[0], present_sink_node[1], optimal_point[0] - present_sink_node[0], optimal_point[1] - present_sink_node[1],width=0.02,color='red',head_length=0.0,head_width=0.0)
   ax.scatter(present_sink_node[0], present_sink_node[1], s=50, c='red')
