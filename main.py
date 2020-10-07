@@ -11,8 +11,8 @@ X = np.array([[28, 7], [36, 5], [32, 2], [56, 8], [47, 5], [50, 100], [100, 100]
 X = np.array([[49, 10], [51, 16], [53, 13], [55, 12], [91, 15], [84, 17], [92, 32], [97, 11], [63, 85], [66, 85], [68, 92], [
              70, 86], [62, 76], [55, 78], [103, 119], [104, 110], [100, 108], [104, 105], [78, 56], [76, 58], [79, 57], [71, 46]])
 ncluster = plot_silh(X)
-maxrange_basestation = int(input("Entr max range of Base Station : "))
-maxrange_node = int(input("Entr max range of each sensor : "))
+maxrange_basestation = int(input("Enter max range of Base Station : "))
+maxrange_node = int(input("Enter max range of each sensor : "))
 kmeans = KMeans(n_clusters=ncluster, max_iter=500).fit(X)
 y = kmeans.labels_
 centroids = kmeans.cluster_centers_
