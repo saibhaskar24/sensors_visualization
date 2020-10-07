@@ -61,7 +61,7 @@ def primMST(n, g):
 
 
 def geteratepointsinbetween(p1, p2):
-    frames = np.linspace(0, 1, num=int(get_distance(p1, p2)))
+    frames = np.linspace(0, 1, num=int(get_distance(p1, p2))//5)
     path = [[], []]
     for t in frames:
         x = p1[0] + \

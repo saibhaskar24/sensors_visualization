@@ -46,7 +46,7 @@ def drawclusters():
         ax.fill(points[vert, 0], points[vert, 1], c=col[i], alpha=0.2)
     plt.scatter(centroids[:, 0], centroids[:, 1], s=200,
                 c='red', label='Centroids', marker='x')
-    plt.scatter(sink_node[0], sink_node[1], s=50,
+    plt.scatter(sink_node[0], sink_node[1], s=60,
                 c='orange', label=f'Sink Node')
     ax.scatter(BaseStation[0], BaseStation[1], s=500, c='black')
     circlebase = plt.Circle(BaseStation, maxrange_basestation, color='black', clip_on=False, alpha=0.1)
@@ -97,8 +97,8 @@ for i in range(len(sink_node[0])):
             # print("Signal ",optimalCluster_Cluster)
 #   print(present_sink_node, optimal_point, cluster_no)
     ax.arrow(present_sink_node[0], present_sink_node[1], optimal_point[0] - present_sink_node[0], optimal_point[1] - present_sink_node[1],width=0.02,color='red',head_length=0.0,head_width=0.0)
-    ax.scatter(present_sink_node[0], present_sink_node[1], s=50, c='red')
-    ax.scatter(optimal_point[0], optimal_point[1], s=50, c='red')
+    ax.scatter(present_sink_node[0], present_sink_node[1], s=10, c='red')
+    ax.scatter(optimal_point[0], optimal_point[1], s=10, c='red')
   # plt.show()
 
   # camera.snap()
