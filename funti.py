@@ -115,8 +115,20 @@ def get_sink_node_path(X, n):
         sinkNode_y[i] = round(sinkNode_y[i], 3)
     sinkNode_x = list(sinkNode_x)
     sinkNode_y = list(sinkNode_y)
+    i = 0
+    leng = len(sinkNode_x)
+    while i < leng:
+        if sinkNode_x[i] <= x1[0] and sinkNode_y[i] <= x1[1]:
+            # print(sinkNode_x[i],sinkNode_y[i])
+            sinkNode_x.pop(i)
+            sinkNode_y.pop(i)
+            leng -= 1
+        else:
+            i += 1
+
     p1, p2 = [min(sinkNode_x)-2, min(sinkNode_y)], [
         max(sinkNode_x)+2, min(sinkNode_y)]
+
     gen = geteratepointsinbetween([sinkNode_x[0], sinkNode_y[0]], p1)
     sinkNode_x = gen[0] + sinkNode_x
     sinkNode_y = gen[1] + sinkNode_y
