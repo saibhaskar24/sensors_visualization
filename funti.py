@@ -90,15 +90,15 @@ def get_sink_node_path(X, n):
     x1[0] -= 3
     x2[0] += 3
     y2[1] += 3
-    p1, p2 = [x1[0], (x1[1]+y1[1])//2], [x2[0], (x2[1]+y1[1])//2]
-    BaseStation = [(x1[0]+x2[0])//2, y2[1]+4]
+    # p1, p2 = [x1[0], (x1[1]+y1[1])//2], [x2[0], (x2[1]+y1[1])//2]
+
     if x1[0] == y2[0]:
         y2[0] += 1
     if y2[0] == x2[0]:
         y2[0] += 1
 
     listOfPoints = [x1, x2, y2]
-    # print(listOfPoints)
+    print(listOfPoints, "List of nodes")
     listOfPoints.sort()
     x_coOrdinates = []
     y_coOrdinates = []
@@ -107,14 +107,16 @@ def get_sink_node_path(X, n):
         y_coOrdinates.append(i[1])
     x_coOrdinates = np.array(x_coOrdinates)
     y_coOrdinates = np.array(y_coOrdinates)
-    sinkNode_x = np.linspace(x_coOrdinates.min(), x_coOrdinates.max(), 200)
+    sinkNode_x = np.linspace(x_coOrdinates.min(), x_coOrdinates.max(), 30)
     spl = make_interp_spline(x_coOrdinates, y_coOrdinates, k=2)
     sinkNode_y = spl(sinkNode_x)
-    for i in range(200):
+    for i in range(30):
         sinkNode_x[i] = round(sinkNode_x[i], 3)
         sinkNode_y[i] = round(sinkNode_y[i], 3)
     sinkNode_x = list(sinkNode_x)
     sinkNode_y = list(sinkNode_y)
+    p1, p2 = [min(sinkNode_x)-2, sinkNode_y[sinkNode_x.index(min(sinkNode_x))]], [
+        max(sinkNode_x)+2, sinkNode_y[sinkNode_x.index(max(sinkNode_x))]]
     gen = geteratepointsinbetween([sinkNode_x[0], sinkNode_y[0]], p1)
     sinkNode_x = gen[0] + sinkNode_x
     sinkNode_y = gen[1] + sinkNode_y
@@ -123,6 +125,7 @@ def get_sink_node_path(X, n):
     sinkNode_y = sinkNode_y + gen[1]
     sinkNode_x.append(p2[0])
     sinkNode_y.append(p2[1])
+    BaseStation = [(min(sinkNode_x)+max(sinkNode_x))//2, max(sinkNode_y)+4]
     i = 0
     leng = len(sinkNode_x)
     while i < leng:
