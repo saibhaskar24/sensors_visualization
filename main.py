@@ -46,6 +46,8 @@ def drawclusters():
                 c='red', label='Centroids', marker='x')
     plt.scatter(sink_node[0], sink_node[1], s=50,
                 c='orange', label=f'Sink Node')
+    ax.scatter(BaseStation[0], BaseStation[1], s=500, c='black')
+
 
 
 drawclusters()
@@ -90,7 +92,6 @@ for i in range(len(sink_node[0])):
                     minDist = dist
                     optimalCluster_Cluster = i
             # print("Signal ",optimalCluster_Cluster)
-    ax.scatter(optimalCluster_Cluster[0], optimalCluster_Cluster[1], s=500, c='black')
 #   print(present_sink_node, optimal_point, cluster_no)
     ax.arrow(present_sink_node[0], present_sink_node[1], optimal_point[0] - present_sink_node[0], optimal_point[1] - present_sink_node[1],width=0.02,color='red',head_length=0.0,head_width=0.0)
     ax.scatter(present_sink_node[0], present_sink_node[1], s=50, c='red')
