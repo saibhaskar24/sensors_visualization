@@ -49,12 +49,13 @@ def drawclusters():
     plt.scatter(sink_node[0], sink_node[1], s=50,
                 c='orange', label=f'Sink Node')
     ax.scatter(BaseStation[0], BaseStation[1], s=500, c='black')
+    circlebase = plt.Circle(BaseStation, maxrange_basestation, color='black', clip_on=False, alpha=0.1)
+    ax.add_artist(circlebase)
 
 
 
 drawclusters()
 plt.legend()
-plt.tight_layout()
 # plt.show()
 
 camera = Camera(fig)
