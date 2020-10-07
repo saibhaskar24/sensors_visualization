@@ -73,8 +73,8 @@ def geteratepointsinbetween(p1, p2):
     return path
 
 
-def get_sink_node_path(X, n):
-    temp_dist = 100
+def get_sink_node_path(X, n, temp_dist):
+    # temp_dist = 100
     x1, x2, y2, y1 = [10000000000, -1], [-1, -
                                          1], [-1, -1], [-1, 10000000000000]
     for i in X:
@@ -180,8 +180,8 @@ def get_energy_of_tramission(sink_node, cluster_node):
     return (5000*(tx_energy+data_agg_energy)-(5000*tx_fs_energy*(distance**2)))
 
 
-def get_optimal_node(sink_node, min_dist_cluster_no, cluster_matrix, energies):
-    temp_dist = 20
+def get_optimal_node(sink_node, min_dist_cluster_no, cluster_matrix, energies, temp_dist):
+    # temp_dist = 20
     tx_energy = {}
     max_energy = -1
 
