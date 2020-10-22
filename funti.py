@@ -98,6 +98,10 @@ def get_sink_node_path(X, n, temp_dist):
         y2[0] += 1
 
     listOfPoints = [x1, x2, y2,[52,77]]
+    # hall = ConvexHull(X)
+    # listOfPoints = []
+    # for i in hall.vertices:
+    #     listOfPoints.append(X[i])
     print(listOfPoints, "List of nodes")
     listOfPoints.sort()
     x_coOrdinates = []
