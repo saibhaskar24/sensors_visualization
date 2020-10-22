@@ -2,7 +2,7 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 from math import sqrt, pow
 import numpy as np
-from scipy.interpolate import make_interp_spline, BSpline
+from scipy.interpolate import make_interp_spline, BSpline, pchip_interpolate
 from scipy.spatial import ConvexHull
 
 
@@ -97,7 +97,7 @@ def get_sink_node_path(X, n, temp_dist):
     if y2[0] == x2[0]:
         y2[0] += 1
 
-    listOfPoints = [x1, x2, y2]
+    listOfPoints = [x1, x2, y2,[52,77]]
     print(listOfPoints, "List of nodes")
     listOfPoints.sort()
     x_coOrdinates = []
@@ -107,9 +107,11 @@ def get_sink_node_path(X, n, temp_dist):
         y_coOrdinates.append(i[1])
     x_coOrdinates = np.array(x_coOrdinates)
     y_coOrdinates = np.array(y_coOrdinates)
+    
     sinkNode_x = np.linspace(x_coOrdinates.min(), x_coOrdinates.max(), 30)
-    spl = make_interp_spline(x_coOrdinates, y_coOrdinates, k=2)
-    sinkNode_y = spl(sinkNode_x)
+    # spl = make_interp_spline(x_coOrdinates, y_coOrdinates, k=2)
+    sinkNode_y = pchip_interpolate(x_coOrdinates, y_coOrdinates, sinkNode_x)
+    # sinkNode_y = spl(sinkNode_x)
     for i in range(30):
         sinkNode_x[i] = round(sinkNode_x[i], 3)
         sinkNode_y[i] = round(sinkNode_y[i], 3)
