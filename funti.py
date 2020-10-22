@@ -97,13 +97,26 @@ def get_sink_node_path(X, n, temp_dist):
     if y2[0] == x2[0]:
         y2[0] += 1
 
-    listOfPoints = [x1, x2, y2,[52,77]]
-    # hall = ConvexHull(X)
-    # listOfPoints = []
-    # for i in hall.vertices:
-    #     listOfPoints.append(X[i])
+    listOfPoints = [x1, x2, y2, [52, 77]]
+    hall = ConvexHull(X)
+    listOfPoints = []
+    for i in hall.vertices:
+        listOfPoints.append(X[i])
     print(listOfPoints, "List of nodes")
     listOfPoints.sort()
+
+    listOfPoints = [x1, x2, y2, [52, 77]]
+    hall = ConvexHull(X)
+    listOfPoints = []
+    for i in hall.vertices:
+        listOfPoints.append(list(X[i]))
+    listOfPoints.sort()
+    print(listOfPoints, "List of nodes")
+    i = 1
+    while i < len(listOfPoints):
+        if listOfPoints[i][0] == listOfPoints[i-1][0]:
+            listOfPoints[i][0] += 1
+        i += 1
     x_coOrdinates = []
     y_coOrdinates = []
     for i in listOfPoints:
@@ -111,7 +124,7 @@ def get_sink_node_path(X, n, temp_dist):
         y_coOrdinates.append(i[1])
     x_coOrdinates = np.array(x_coOrdinates)
     y_coOrdinates = np.array(y_coOrdinates)
-    
+
     sinkNode_x = np.linspace(x_coOrdinates.min(), x_coOrdinates.max(), 30)
     # spl = make_interp_spline(x_coOrdinates, y_coOrdinates, k=2)
     sinkNode_y = pchip_interpolate(x_coOrdinates, y_coOrdinates, sinkNode_x)

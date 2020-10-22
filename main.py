@@ -29,7 +29,8 @@ print("Redii's :", clusters_radii)
 
 fig, ax = plt.subplots(1, figsize=(7, 5))
 
-sink_node, BaseStation = get_sink_node_path(X, len(X), maxrange_basestation)     # sink node creation
+sink_node, BaseStation = get_sink_node_path(
+    X, len(X), maxrange_basestation)     # sink node creation
 
 
 # print("Sink Node :\nX :",sink_node[0], "\nY :", sink_node[1])
@@ -49,9 +50,9 @@ def drawclusters():
     plt.scatter(sink_node[0], sink_node[1], s=60,
                 c='orange', label=f'Sink Node')
     ax.scatter(BaseStation[0], BaseStation[1], s=500, c='black')
-    circlebase = plt.Circle(BaseStation, maxrange_basestation, color='black', clip_on=False, alpha=0.1)
+    circlebase = plt.Circle(BaseStation, maxrange_basestation,
+                            color='black', clip_on=False, alpha=0.1)
     ax.add_artist(circlebase)
-
 
 
 drawclusters()
@@ -68,7 +69,7 @@ for i in X:
 # print(energies)
 cluster_matrix = [[] for i in range(ncluster)]
 for i in range(no_of_nodes):
-  cluster_matrix[y[i]].append(list(X[i]))
+    cluster_matrix[y[i]].append(list(X[i]))
 
 tempClusterNode = [36, 5]
 
@@ -96,13 +97,14 @@ for i in range(len(sink_node[0])):
                     optimalCluster_Cluster = i
             # print("Signal ",optimalCluster_Cluster)
 #   print(present_sink_node, optimal_point, cluster_no)
-    ax.arrow(present_sink_node[0], present_sink_node[1], optimal_point[0] - present_sink_node[0], optimal_point[1] - present_sink_node[1],width=0.02,color='red',head_length=0.0,head_width=0.0)
+    ax.arrow(present_sink_node[0], present_sink_node[1], optimal_point[0] - present_sink_node[0],
+             optimal_point[1] - present_sink_node[1], width=0.02, color='red', head_length=0.0, head_width=0.0)
     ax.scatter(present_sink_node[0], present_sink_node[1], s=10, c='red')
     ax.scatter(optimal_point[0], optimal_point[1], s=10, c='red')
-  # plt.show()
+    # plt.show()
 
-  # camera.snap()
-  # drawclusters()
+    # camera.snap()
+    # drawclusters()
 
 plt.show()
 # camera.snap()
