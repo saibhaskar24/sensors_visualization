@@ -154,17 +154,13 @@ def get_sink_node_path(X, n, temp_dist):
         y.append(d[i])
 
     i = 0
-    print(x)
-    print(y)
     while(i<len(x)):
         if isInHull((x[i],y[i])):
             x.pop(i)
             y.pop(i)
             i-=1
         i+=1
-    print(x)
-    print(y)
-    print(vx,vy)
+    print(x,y)
     x2 = np.linspace(min(x), max(x), 100)
     y2 = pchip_interpolate(x, y, x2)
     i = 0
@@ -213,9 +209,6 @@ def get_sink_node_path(X, n, temp_dist):
             leng -= 1
         else:
             i += 1
-
-    print("x: ", sinkNode_x)
-    print("y: ", sinkNode_y)
     return [sinkNode_x, sinkNode_y], BaseStation
 
 
