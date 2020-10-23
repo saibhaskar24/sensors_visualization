@@ -47,6 +47,7 @@ print(y)
 print(vx,vy)
 x2 = np.linspace(min(x), max(x), 100)
 y2 = pchip_interpolate(x, y, x2)
+print(x2,y2)
 i = 0
 x2=list(x2)
 y2=list(y2)
@@ -56,6 +57,7 @@ while(i<len(x2)):
         y2.pop(i)
         i-=1
     i+=1
+print(x2,y2)
 
 
 import matplotlib.pyplot as plt
