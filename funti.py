@@ -61,7 +61,7 @@ def primMST(n, g):
 
 
 def geteratepointsinbetween(p1, p2):
-    frames = np.linspace(0, 1, num=int(get_distance(p1, p2))//5)
+    frames = np.linspace(0, 1, num=int(get_distance(p1, p2))//3)
     path = [[], []]
     for t in frames:
         x = p1[0] + \
@@ -97,7 +97,6 @@ def get_sink_node_path(X, n, temp_dist):
     if y2[0] == x2[0]:
         y2[0] += 1
 
-
     # listOfPoints = [x1, x2, y2, [52, 77]]
     # hall = ConvexHull(X)
     # listOfPoints = []
@@ -130,75 +129,87 @@ def get_sink_node_path(X, n, temp_dist):
             (np.dot(eq[:-1], point) + eq[-1] <= tolerance)
             for eq in hull.equations)
 
-    vx,vy = [],[]
-    x , y = [], []
+    vx, vy = [], []
     for i in hull.vertices:
-        x.append(X[i][0]-3)
         vx.append(X[i][0])
-        x.append(X[i][0]+3)
-        y.append(X[i][1]+4)
-        vy.append(X[i][1])
-        y.append(X[i][1]+4)
+        vy.append(X[i][1]+7)
+    pointsx = []
+    pointsy = []
+    for i in range(len(vy)-1):
+        gen = geteratepointsinbetween([vx[i], vy[i]], [vx[i+1], vy[i+1]])
+        pointsx += gen[0]
+        pointsy += gen[1]
+    gen = geteratepointsinbetween([vx[0], vy[0]], [vx[-1], vy[-1]])
+    pointsx += gen[0]
+    pointsy += gen[1]
+    # d = {}
+    # for i in range(len(x)):
+    #     if x[i] in d:
+    #         if d[x[i]] < y[i]:
+    #             d[x[i]] = y[i]
+    #     else:
+    #         d[x[i]] = y[i]
 
-    d = {}
-    for i in range(len(x)):
-        if x[i] in d:
-            if d[x[i]] < y[i]:
-                d[x[i]] = y[i]
-        else:
-            d[x[i]] = y[i]
+    # x,y = [],[]
+    # for i in sorted(d.keys()):
+    #     x.append(i)
+    #     y.append(d[i])
 
-    x,y = [],[]
-    for i in sorted(d.keys()):
-        x.append(i)
-        y.append(d[i])
+    # i = 0
+    # while(i<len(x)):
+    #     if isInHull((x[i],y[i])):
+    #         x.pop(i)
+    #         y.pop(i)
+    #         i-=1
+    #     i+=1
 
-    i = 0
-    while(i<len(x)):
-        if isInHull((x[i],y[i])):
-            x.pop(i)
-            y.pop(i)
-            i-=1
-        i+=1
-    print(x,y)
-    x2 = np.linspace(min(x), max(x), 100)
-    y2 = pchip_interpolate(x, y, x2)
-    i = 0
-    x2=list(x2)
-    y2=list(y2)
-    while(i<len(x2)):
-        if isInHull((x2[i],y2[i])):
-            x2.pop(i)
-            y2.pop(i)
-            i-=1
-        i+=1
-    for i in range(30):
-        x2[i] = round(x2[i], 3)
-        y2[i] = round(y2[i], 3)
-    sinkNode_x = list(x2)
-    sinkNode_y = list(y2)
-    i = 0
-    leng = len(sinkNode_x)
-    while i < leng:
-        if sinkNode_x[i] <= x1[0] and sinkNode_y[i] <= x1[1]:
-            # print(sinkNode_x[i],sinkNode_y[i])
-            sinkNode_x.pop(i)
-            sinkNode_y.pop(i)
-            leng -= 1
-        else:
-            i += 1
+    while(i < len(pointsx)):
+        if isInHull((pointsx[i], pointsy[i])):
+            pointsx.pop(i)
+            pointsy.pop(i)
+            i -= 1
+        i += 1
 
-    p1, p2 = [min(sinkNode_x)-2, min(sinkNode_y)], [
-        max(sinkNode_x)+2, min(sinkNode_y)]
+    # x2 = np.linspace(min(x), max(x), 100)
+    # y2 = pchip_interpolate(x, y, x2)
+    # i = 0
+    # x2=list(x2)
+    # y2=list(y2)
+    # while(i<len(x2)):
+    #     if isInHull((x2[i],y2[i])):
+    #         x2.pop(i)
+    #         y2.pop(i)
+    #         i-=1
+    #     i+=1
+    # for i in range(30):
+    #     x2[i] = round(x2[i], 3)
+    #     y2[i] = round(y2[i], 3)
+    # sinkNode_x = list(x2)
+    # sinkNode_y = list(y2)
+    # i = 0
+    # leng = len(sinkNode_x)
+    sinkNode_x = pointsx[::]
+    sinkNode_y = pointsy[::]
+    # while i < leng:
+    #     if sinkNode_x[i] <= x1[0] and sinkNode_y[i] <= x1[1]:
+    #         # print(sinkNode_x[i],sinkNode_y[i])
+    #         sinkNode_x.pop(i)
+    #         sinkNode_y.pop(i)
+    #         leng -= 1
+    #     else:
+    #         i += 1
 
-    gen = geteratepointsinbetween([sinkNode_x[0], sinkNode_y[0]], p1)
-    sinkNode_x = gen[0] + sinkNode_x
-    sinkNode_y = gen[1] + sinkNode_y
-    gen = geteratepointsinbetween([sinkNode_x[-1], sinkNode_y[-1]], p2)
-    sinkNode_x = sinkNode_x + gen[0]
-    sinkNode_y = sinkNode_y + gen[1]
-    sinkNode_x.append(p2[0])
-    sinkNode_y.append(p2[1])
+    # p1, p2 = [min(sinkNode_x)-2, min(sinkNode_y)], [
+    #     max(sinkNode_x)+2, min(sinkNode_y)]
+
+    # gen = geteratepointsinbetween([sinkNode_x[0], sinkNode_y[0]], p1)
+    # sinkNode_x = gen[0] + sinkNode_x
+    # sinkNode_y = gen[1] + sinkNode_y
+    # gen = geteratepointsinbetween([sinkNode_x[-1], sinkNode_y[-1]], p2)
+    # sinkNode_x = sinkNode_x + gen[0]
+    # sinkNode_y = sinkNode_y + gen[1]
+    # sinkNode_x.append(p2[0])
+    # sinkNode_y.append(p2[1])
     BaseStation = [(min(sinkNode_x)+max(sinkNode_x))//2, max(sinkNode_y)+4]
     i = 0
     leng = len(sinkNode_x)
