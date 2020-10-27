@@ -30,43 +30,55 @@ print("Redii's :", clusters_radii)
 fig, ax = plt.subplots(1, figsize=(7, 5))
 
 sink_node, BaseStation = get_sink_node_path(
-    X, len(X), maxrange_basestation)     # sink node creation
+    X, len(X), maxrange_basestation)
 
 
-# print("Sink Node :\nX :",sink_node[0], "\nY :", sink_node[1])
-
-def drawclusters():
+def drawcluster():
     for i in range(ncluster):
         points = X[y == i]
         ax.scatter(points[:, 0], points[:, 1], s=100,
                    c=col[i], label=f'Cluster {i + 1}')
         hull = ConvexHull(points)
-        # close the polygon by appending the first point at the end
         vert = np.append(hull.vertices, hull.vertices[0])
         ax.plot(points[vert, 0], points[vert, 1], '--', c=col[i])
         ax.fill(points[vert, 0], points[vert, 1], c=col[i], alpha=0.2)
+
+def drawcentroids():
     plt.scatter(centroids[:, 0], centroids[:, 1], s=200,
                 c='red', label='Centroids', marker='x')
+
+def drawsinknodepath():
     plt.scatter(sink_node[0], sink_node[1], s=60,
                 c='orange', label=f'Sink Node')
+
+def drawtowernode():
     ax.scatter(BaseStation[0], BaseStation[1], s=500, c='black')
     circlebase = plt.Circle(BaseStation, maxrange_basestation,
                             color='black', clip_on=False, alpha=0.1)
     ax.add_artist(circlebase)
 
 
-drawclusters()
-plt.legend()
-# plt.show()
 
-camera = Camera(fig)
+def draw():
+    drawcluster()
+    drawcentroids()
+    drawsinknodepath()
+    drawtowernode()
+
+
+
+
+draw()
+plt.legend()
+
+# plt.show()
+# camera = Camera(fig)
 
 
 no_of_nodes = len(X)
 energies = {}
 for i in X:
     energies[tuple(i)] = 5
-# print(energies)
 cluster_matrix = [[] for i in range(ncluster)]
 for i in range(no_of_nodes):
     cluster_matrix[y[i]].append(list(X[i]))
@@ -104,7 +116,7 @@ for i in range(len(sink_node[0])):
     # plt.show()
 
     # camera.snap()
-    # drawclusters()
+    # draw()
 
 plt.show()
 # camera.snap()

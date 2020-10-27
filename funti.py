@@ -97,34 +97,9 @@ def get_sink_node_path(X, n, temp_dist):
     if y2[0] == x2[0]:
         y2[0] += 1
 
-    # listOfPoints = [x1, x2, y2, [52, 77]]
-    # hall = ConvexHull(X)
-    # listOfPoints = []
-    # for i in hall.vertices:
-    #     listOfPoints.append(list(X[i]))
-    # listOfPoints.sort()
-    # print(listOfPoints, "List of nodes")
-    # i = 1
-    # while i < len(listOfPoints):
-    #     if listOfPoints[i][0] == listOfPoints[i-1][0]:
-    #         listOfPoints[i][0] += 1
-    #     i += 1
-    # x_coOrdinates = []
-    # y_coOrdinates = []
-    # for i in listOfPoints:
-    #     x_coOrdinates.append(i[0])
-    #     y_coOrdinates.append(i[1])
-    # x_coOrdinates = np.array(x_coOrdinates)
-    # y_coOrdinates = np.array(y_coOrdinates)
-
-    # sinkNode_x = np.linspace(x_coOrdinates.min(), x_coOrdinates.max(), 30)
-    # # spl = make_interp_spline(x_coOrdinates, y_coOrdinates, k=2)
-    # sinkNode_y = pchip_interpolate(x_coOrdinates, y_coOrdinates, sinkNode_x)
-    # # sinkNode_y = spl(sinkNode_x)
-
     hull = ConvexHull(X)
 
-    def isInHull(point, tolerance=1e-12):
+    def isnotInHull(point, tolerance=1e-12):
         return all(
             (np.dot(eq[:-1], point) + eq[-1] <= tolerance)
             for eq in hull.equations)
@@ -133,6 +108,10 @@ def get_sink_node_path(X, n, temp_dist):
     for i in hull.vertices:
         vx.append(X[i][0])
         vy.append(X[i][1]+7)
+
+    
+
+
     pointsx = []
     pointsy = []
     for i in range(len(vy)-1):
@@ -142,74 +121,16 @@ def get_sink_node_path(X, n, temp_dist):
     gen = geteratepointsinbetween([vx[0], vy[0]], [vx[-1], vy[-1]])
     pointsx += gen[0]
     pointsy += gen[1]
-    # d = {}
-    # for i in range(len(x)):
-    #     if x[i] in d:
-    #         if d[x[i]] < y[i]:
-    #             d[x[i]] = y[i]
-    #     else:
-    #         d[x[i]] = y[i]
-
-    # x,y = [],[]
-    # for i in sorted(d.keys()):
-    #     x.append(i)
-    #     y.append(d[i])
-
-    # i = 0
-    # while(i<len(x)):
-    #     if isInHull((x[i],y[i])):
-    #         x.pop(i)
-    #         y.pop(i)
-    #         i-=1
-    #     i+=1
-
+    i = 0
     while(i < len(pointsx)):
-        if isInHull((pointsx[i], pointsy[i])):
+        if isnotInHull((pointsx[i], pointsy[i])):
             pointsx.pop(i)
             pointsy.pop(i)
             i -= 1
         i += 1
 
-    # x2 = np.linspace(min(x), max(x), 100)
-    # y2 = pchip_interpolate(x, y, x2)
-    # i = 0
-    # x2=list(x2)
-    # y2=list(y2)
-    # while(i<len(x2)):
-    #     if isInHull((x2[i],y2[i])):
-    #         x2.pop(i)
-    #         y2.pop(i)
-    #         i-=1
-    #     i+=1
-    # for i in range(30):
-    #     x2[i] = round(x2[i], 3)
-    #     y2[i] = round(y2[i], 3)
-    # sinkNode_x = list(x2)
-    # sinkNode_y = list(y2)
-    # i = 0
-    # leng = len(sinkNode_x)
     sinkNode_x = pointsx[::]
     sinkNode_y = pointsy[::]
-    # while i < leng:
-    #     if sinkNode_x[i] <= x1[0] and sinkNode_y[i] <= x1[1]:
-    #         # print(sinkNode_x[i],sinkNode_y[i])
-    #         sinkNode_x.pop(i)
-    #         sinkNode_y.pop(i)
-    #         leng -= 1
-    #     else:
-    #         i += 1
-
-    # p1, p2 = [min(sinkNode_x)-2, min(sinkNode_y)], [
-    #     max(sinkNode_x)+2, min(sinkNode_y)]
-
-    # gen = geteratepointsinbetween([sinkNode_x[0], sinkNode_y[0]], p1)
-    # sinkNode_x = gen[0] + sinkNode_x
-    # sinkNode_y = gen[1] + sinkNode_y
-    # gen = geteratepointsinbetween([sinkNode_x[-1], sinkNode_y[-1]], p2)
-    # sinkNode_x = sinkNode_x + gen[0]
-    # sinkNode_y = sinkNode_y + gen[1]
-    # sinkNode_x.append(p2[0])
-    # sinkNode_y.append(p2[1])
     BaseStation = [(min(sinkNode_x)+max(sinkNode_x))//2, max(sinkNode_y)+4]
     i = 0
     leng = len(sinkNode_x)
@@ -230,9 +151,6 @@ def plot_silh(X):
         KM.fit(X)
         lables = KM.labels_
         sil.append(silhouette_score(X, lables, metric='euclidean'))
-    # plt.clf()
-    # plt.plot(range(2,10),sil)
-    # plt.draw()
     print(sil.index(max(sil))+2)
     print(sil)
     return sil.index(max(sil))+2
