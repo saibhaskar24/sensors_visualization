@@ -113,12 +113,17 @@ for i in range(len(sink_node[0])):
              optimal_point[1] - present_sink_node[1], width=0.02, color='red', head_length=0.0, head_width=0.0)
     ax.scatter(present_sink_node[0], present_sink_node[1], s=10, c='red')
     ax.scatter(optimal_point[0], optimal_point[1], s=10, c='red')
-    # plt.show()
+    plt.show()
+    fig, ax = plt.subplots(1, figsize=(7, 5))
+
 
     # camera.snap()
-    # draw()
+    draw()
 
-plt.show()
+# plt.show()
+
+
+
 # camera.snap()
 # animation = camera.animate()
 
