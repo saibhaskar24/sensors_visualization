@@ -1,9 +1,9 @@
-from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
+# from sklearn.cluster import KMeans
+# from sklearn.metrics import silhouette_score
 from math import sqrt, pow
 import numpy as np
-from scipy.interpolate import make_interp_spline, BSpline, pchip_interpolate
-from scipy.spatial import ConvexHull
+# from scipy.interpolate import make_interp_spline, BSpline, pchip_interpolate
+# from scipy.spatial import ConvexHull
 
 
 def getpathpoints(parent, n, g, centroids):
@@ -109,9 +109,6 @@ def get_sink_node_path(X, n, temp_dist):
         vx.append(X[i][0])
         vy.append(X[i][1]+7)
 
-    
-
-
     pointsx = []
     pointsy = []
     for i in range(len(vy)-1):
@@ -189,6 +186,13 @@ def get_optimal_node(sink_node, min_dist_cluster_no, cluster_matrix, energies, t
     for i in list_of_min_nodes:
         tx_energy[tuple(i)] = get_energy_of_tramission(sink_node, i)
         max_energy = max(max_energy, energies[tuple(i)])
+    c = 0 
+    for i in list_of_min_nodes:
+        if energies[i]>=tx_energy[i]:
+            break 
+        c+=1 
+    if c == len(list_of_min_nodes):
+        return -1
     optimalNode = []
     min_tx_energy = 10000000000000000000
     for i in tx_energy:
@@ -211,3 +215,9 @@ def creategraph(centroids, n):
                 k.append(get_distance(centroids[i], centroids[j]))
         g.append(k)
     return g
+
+
+def staticSinkPath():
+    y = [y for y in range(0, 31)]
+    x = [(y/4)**2 for y in y]
+    return [x, y]
