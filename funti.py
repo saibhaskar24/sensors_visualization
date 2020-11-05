@@ -1,9 +1,9 @@
-# from sklearn.cluster import KMeans
-# from sklearn.metrics import silhouette_score
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
 from math import sqrt, pow
 import numpy as np
-# from scipy.interpolate import make_interp_spline, BSpline, pchip_interpolate
-# from scipy.spatial import ConvexHull
+from scipy.interpolate import make_interp_spline, BSpline, pchip_interpolate
+from scipy.spatial import ConvexHull
 
 
 def getpathpoints(parent, n, g, centroids):
