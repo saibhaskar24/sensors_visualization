@@ -188,7 +188,7 @@ def get_optimal_node(sink_node, min_dist_cluster_no, cluster_matrix, energies, t
         max_energy = max(max_energy, energies[tuple(i)])
     c = 0 
     for i in list_of_min_nodes:
-        if energies[i]>=tx_energy[i]:
+        if energies[tuple(i)]>=tx_energy[tuple(i)]:
             break 
         c+=1 
     if c == len(list_of_min_nodes):

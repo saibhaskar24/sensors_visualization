@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-from celluloid import Camera
 from funti import *
 
 import csv
@@ -118,6 +117,9 @@ cluster_matrix = [[] for i in range(ncluster)]
 
 for i in range(no_of_nodes):
     cluster_matrix[y[i]].append(list(X[i]))
+
+
+ppppp=0
 while(2):
     count += 1
     for i in range(len(sink_node1[0])):
@@ -134,6 +136,10 @@ while(2):
         if optimal_point == -1:
             break
     writer.writerow(energies2.values())
+    if ppppp == 10000:
+        break
+    print(ppppp)
+    ppppp+=1
 print(count)
 
 f.close()
