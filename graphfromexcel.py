@@ -14,7 +14,7 @@ for sheet in dff.sheet_names:
 dff.close()
 
 col = ['b*--', 'r--', 'm', 'y', 'k', "violet", "indigo"]
-name = ["Static", "Mobility"]
+name = ["Static", "Mobility","cluster"]
 i = 0
 figure, axes = plt.subplots(nrows=2, ncols=5)
 for rows in axes:
@@ -24,7 +24,7 @@ for rows in axes:
             l = []
             for I in range(0,len(L),200):
                 l.append(L[I])
-            ax1.plot(l, range(len(l)), col[j],label = name[j%2])
+            ax1.plot( range(len(l)),l, col[j],label = name[j%3])
             ax1.set_title('Node'+str(i+1))
             ax1.legend()
             
