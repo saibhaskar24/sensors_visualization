@@ -31,29 +31,47 @@ print("Redii's :", clusters_radii)
 
 fig, ax = plt.subplots(1, figsize=(7, 5))
 
-sink_node1, BaseStation1 = get_sink_node_path(
-    X, len(X), maxrange_basestation)     # sink node creation
-sink_node2 = staticSinkPath()
+# sink_node1, BaseStation1 = get_sink_node_path(
+#     X, len(X), maxrange_basestation)     # sink node creation
+# sink_node2 = staticSinkPath()
 p1 = []
 p2 = []
 for i in X:
     p1.append(i[0])
     p2.append(i[1])
+print(p1, p2)
 base = [-1, -1]
+
 base[0] = (min(p1)+max(p1))//2
 base[1] = max(p2)+5
 
 # # Energy Utilisation
-
+clusterPoints = [[] for i in range(ncluster)]
+for i in range(len(X)):
+    clusterPoints[y[i]].append(X[i])
+final = []
+for i in range(ncluster):
+    min1 = 10000000000
+    ind = [-1, -1]
+    p = clusterPoints[i]
+    for i in p:
+        s = 0
+        for j in p:
+            d = get_distance(i, j)
+            s += d
+        s /= len(X)
+        if min1 > s:
+            min1 = s
+            ind = i
+    final.append(list(i))
+# print(final)
 best = [-1, -1]
-min = 1000000000
-for i in centroids:
+mini = 10000000000
+for i in final:
     d = get_distance(i, base)
-    if min > d:
-        d = min
+    if mini > d:
+        mini = d
         best = i
-
-
 no_of_nodes = len(X)
 energies1 = {}
 energies2 = {}
