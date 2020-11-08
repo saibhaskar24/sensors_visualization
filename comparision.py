@@ -143,8 +143,8 @@ def txEnergyChange(sink_node, optNode, energies):
 # count = 0
 # cluster_matrix = [[] for i in range(ncluster)]
 
-for i in range(no_of_nodes):
-    cluster_matrix[y[i]].append(list(X[i]))
+# for i in range(no_of_nodes):
+#     cluster_matrix[y[i]].append(list(X[i]))
 while(2):
     count += 1
     for i in range(len(sink_node1[0])):
@@ -161,7 +161,7 @@ while(2):
         if optimal_point == -1:
             break
     writer.writerow(energies2.values())
-    if count>=100000:
+    if count >= 100000:
         break
 print(count)
 
