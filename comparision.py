@@ -4,7 +4,7 @@ from celluloid import Camera
 from funti import *
 
 import csv
-f = open("sinkpath4.csv", "w", newline='')
+f = open("sinkpath3.csv", "w", newline='')
 writer = csv.writer(f)
 writer.writerow(["Node1", "Node2", "Node3", "Node4", "Node5",
                  "Node6", "Node7", "Node8", "Node9", "Node10"])
