@@ -161,6 +161,8 @@ while(2):
         if optimal_point == -1:
             break
     writer.writerow(energies2.values())
+    if count>=100000:
+        break
 print(count)
 
 # count = 0
