@@ -140,11 +140,11 @@ def txEnergyChange(sink_node, optNode, energies):
 #     if temp == 0:
 #         break
 # print(count)
-# count = 0
-# cluster_matrix = [[] for i in range(ncluster)]
+count = 0
+cluster_matrix = [[] for i in range(ncluster)]
 
-# for i in range(no_of_nodes):
-#     cluster_matrix[y[i]].append(list(X[i]))
+for i in range(no_of_nodes):
+    cluster_matrix[y[i]].append(list(X[i]))
 while(2):
     count += 1
     for i in range(len(sink_node1[0])):
