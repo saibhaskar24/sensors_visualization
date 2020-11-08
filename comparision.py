@@ -31,47 +31,47 @@ print("Redii's :", clusters_radii)
 
 fig, ax = plt.subplots(1, figsize=(7, 5))
 
-# sink_node1, BaseStation1 = get_sink_node_path(
-#     X, len(X), maxrange_basestation)     # sink node creation
+sink_node1, BaseStation1 = get_sink_node_path(
+    X, len(X), maxrange_basestation)     # sink node creation
 # sink_node2 = staticSinkPath()
-p1 = []
-p2 = []
-for i in X:
-    p1.append(i[0])
-    p2.append(i[1])
-print(p1, p2)
-base = [-1, -1]
+# p1 = []
+# p2 = []
+# for i in X:
+#     p1.append(i[0])
+#     p2.append(i[1])
+# print(p1, p2)
+# base = [-1, -1]
 
-base[0] = (min(p1)+max(p1))//2
-base[1] = max(p2)+5
+# base[0] = (min(p1)+max(p1))//2
+# base[1] = max(p2)+5
 
 # # Energy Utilisation
-clusterPoints = [[] for i in range(ncluster)]
-for i in range(len(X)):
-    clusterPoints[y[i]].append(X[i])
-final = []
-for i in range(ncluster):
-    min1 = 10000000000
-    ind = [-1, -1]
-    p = clusterPoints[i]
-    for i in p:
-        s = 0
-        for j in p:
-            d = get_distance(i, j)
-            s += d
-        s /= len(X)
-        if min1 > s:
-            min1 = s
-            ind = i
-    final.append(list(i))
+# clusterPoints = [[] for i in range(ncluster)]
+# for i in range(len(X)):
+#     clusterPoints[y[i]].append(X[i])
+# final = []
+# for i in range(ncluster):
+#     min1 = 10000000000
+#     ind = [-1, -1]
+#     p = clusterPoints[i]
+#     for i in p:
+#         s = 0
+#         for j in p:
+#             d = get_distance(i, j)
+#             s += d
+#         s /= len(X)
+#         if min1 > s:
+#             min1 = s
+#             ind = i
+# final.append(list(i))
 # print(final)
-best = [-1, -1]
-mini = 10000000000
-for i in final:
-    d = get_distance(i, base)
-    if mini > d:
-        mini = d
-        best = i
+# best = [-1, -1]
+# mini = 10000000000
+# for i in final:
+#     d = get_distance(i, base)
+#     if mini > d:
+#         mini = d
+#         best = i
 no_of_nodes = len(X)
 energies1 = {}
 energies2 = {}
@@ -143,35 +143,35 @@ def txEnergyChange(sink_node, optNode, energies):
 # count = 0
 # cluster_matrix = [[] for i in range(ncluster)]
 
-# for i in range(no_of_nodes):
-#     cluster_matrix[y[i]].append(list(X[i]))
-# while(2):
-#     count += 1
-#     for i in range(len(sink_node1[0])):
-#         present_sink_node = [sink_node1[0][i], sink_node1[1][i]]
-#         min_dist = 10000000000000
-#         cluster_no = -1
-#         for j in range(ncluster):
-#             dist = get_distance(present_sink_node, centroids[j])
-#             if min_dist >= dist:
-#                 min_dist = dist
-#                 cluster_no = j
-#         optimal_point = get_optimal_node(
-#             present_sink_node, cluster_no, cluster_matrix, energies2, maxrange_node)
-#         if optimal_point == -1:
-#             break
-#     writer.writerow(energies2.values())
-# print(count)
-
-count = 0
-while(1):
+for i in range(no_of_nodes):
+    cluster_matrix[y[i]].append(list(X[i]))
+while(2):
     count += 1
-    d = get_energy_of_tramission(base, best)
-    if d <= energies1[tuple(best)]:
-        energies1[tuple(best)] -= d
-    else:
-        break
-    writer.writerow(list(energies1.values()))
+    for i in range(len(sink_node1[0])):
+        present_sink_node = [sink_node1[0][i], sink_node1[1][i]]
+        min_dist = 10000000000000
+        cluster_no = -1
+        for j in range(ncluster):
+            dist = get_distance(present_sink_node, centroids[j])
+            if min_dist >= dist:
+                min_dist = dist
+                cluster_no = j
+        optimal_point = get_optimal_node(
+            present_sink_node, cluster_no, cluster_matrix, energies2, maxrange_node)
+        if optimal_point == -1:
+            break
+    writer.writerow(energies2.values())
+print(count)
+
+# count = 0
+# while(1):
+#     count += 1
+#     d = get_energy_of_tramission(base, best)
+#     if d <= energies1[tuple(best)]:
+#         energies1[tuple(best)] -= d
+#     else:
+#         break
+#     writer.writerow(list(energies1.values()))
 
 
 f.close()
