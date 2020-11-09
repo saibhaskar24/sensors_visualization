@@ -13,8 +13,8 @@ for sheet in dff.sheet_names:
 # print(d['Node1'][0][1])
 dff.close()
 
-col = ['b*--', 'r--', 'm', 'y', 'k', "violet", "indigo"]
-name = ["Static", "Mobility","cluster"]
+col = ['b--', 'r--', 'm', 'y', 'k', "violet", "indigo"]
+name = ["Static Sink Path", "Proposed Sink Path"]
 i = 0
 figure, axes = plt.subplots(nrows=2, ncols=5)
 for rows in axes:
