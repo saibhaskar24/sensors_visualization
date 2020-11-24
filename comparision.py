@@ -119,14 +119,14 @@ while(2):
     for i in range(len(sink_node2[0])):
         present_sink_node = [sink_node2[0][i], sink_node2[1][i]]
         min_dist = 10000000000000
-        centroidMini = -1
+        cMini = -1
         for j in range(ncluster):
             dist = get_distance(present_sink_node, clusters_centroids[j])
             if min_dist >= dist:
                 min_dist = dist
-                centeriodMini = j
+                cMini = j
 
-        temp = txEnergyChange(present_sink_node, finals[centroidMini], energies1)
+        temp = txEnergyChange(present_sink_node, finals[cMini], energies1)
         if temp == 0:
             break
     writer.writerow(list(energies1.values()))
