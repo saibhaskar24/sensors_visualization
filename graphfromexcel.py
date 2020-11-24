@@ -22,9 +22,10 @@ for rows in axes:
         for j in range(len(d['Node'+str(i+1)])):
             L = d['Node'+str(i+1)][j].tolist()
             l = []
-            for I in range(0,len(L),20):
+            for I in range(0,len(L[:500]),20):
                 l.append(L[I])
-            ax1.plot( range(len(l)),l, col[j],label = name[j%3])
+            print
+            ax1.plot( range(len(l)),l, col[j],label = name[j%2])
             ax1.set_title('Node'+str(i+1))
             ax1.legend()
             
