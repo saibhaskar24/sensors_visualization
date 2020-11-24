@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-from celluloid import Camera
+# from celluloid import Camera
 from funti import *
 
 import csv
@@ -52,9 +52,9 @@ for i in range(len(X)):
 finals = []
 for i in clusterPoints:
     mini = 10000000
-    p = clusterPoints[i]
+    # p = clusterPoints[i]
     best = []
-    for j in p:
+    for j in i:
         d = get_distance(j, base)
         if d < mini:
             mini = d
@@ -121,12 +121,12 @@ while(2):
         min_dist = 10000000000000
         centroidMini = -1
         for j in range(ncluster):
-            dist = get_distance(present_sink_node, clusters_centroids[i])
+            dist = get_distance(present_sink_node, clusters_centroids[j])
             if min_dist >= dist:
                 min_dist = dist
                 centeriodMini = j
 
-        temp = txEnergyChange(present_sink_node, finals[j], energies1)
+        temp = txEnergyChange(present_sink_node, finals[centroidMini], energies1)
         if temp == 0:
             break
     writer.writerow(list(energies1.values()))
