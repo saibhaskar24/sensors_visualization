@@ -14,7 +14,7 @@ for sheet in dff.sheet_names:
 dff.close()
 
 col = ['b--', 'r--', 'm', 'y', 'k', "violet", "indigo"]
-name = ["Static Cluster Head", "Dynamic Cluster Path (Proposed)"]
+name = ["Static Cluster", "Dynamic Cluster "]
 i = 0
 figure, axes = plt.subplots(nrows=2, ncols=5)
 for rows in axes:
@@ -22,7 +22,7 @@ for rows in axes:
         for j in range(len(d['Node'+str(i+1)])):
             L = d['Node'+str(i+1)][j].tolist()
             l = []
-            for I in range(0,len(L),200):
+            for I in range(0,len(L),20):
                 l.append(L[I])
             ax1.plot( range(len(l)),l, col[j],label = name[j%3])
             ax1.set_title('Node'+str(i+1))
