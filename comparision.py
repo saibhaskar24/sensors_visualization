@@ -133,6 +133,7 @@ while(2):
     if temp == 0:
         break
 print(count)
+print(finals)
 
 # count = 0
 
