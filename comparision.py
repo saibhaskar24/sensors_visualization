@@ -4,7 +4,7 @@ from celluloid import Camera
 from funti import *
 
 import csv
-f = open("sinkpath3.csv", "w", newline='')
+f = open("sinkpath5.csv", "w", newline='')
 writer = csv.writer(f)
 writer.writerow(["Node1", "Node2", "Node3", "Node4", "Node5",
                  "Node6", "Node7", "Node8", "Node9", "Node10"])
@@ -31,24 +31,37 @@ print("Redii's :", clusters_radii)
 
 fig, ax = plt.subplots(1, figsize=(7, 5))
 
-sink_node1, BaseStation1 = get_sink_node_path(
-    X, len(X), maxrange_basestation)     # sink node creation
-# sink_node2 = staticSinkPath()
-# p1 = []
-# p2 = []
-# for i in X:
-#     p1.append(i[0])
-#     p2.append(i[1])
-# print(p1, p2)
-# base = [-1, -1]
+# sink_node1, BaseStation1 = get_sink_node_path(
+#     X, len(X), maxrange_basestation)     # sink node creation
+sink_node2 = staticSinkPath()
+p1 = []
+p2 = []
+for i in X:
+    p1.append(i[0])
+    p2.append(i[1])
+print(p1, p2)
+base = [-1, -1]
 
-# base[0] = (min(p1)+max(p1))//2
-# base[1] = max(p2)+5
+base[0] = (min(p1)+max(p1))//2
+base[1] = max(p2)+5
 
 # # Energy Utilisation
-# clusterPoints = [[] for i in range(ncluster)]
-# for i in range(len(X)):
-#     clusterPoints[y[i]].append(X[i])
+clusterPoints = [[] for i in range(ncluster)]
+for i in range(len(X)):
+    clusterPoints[y[i]].append(X[i])
+finals = []
+for i in clusterPoints:
+    mini = 10000000
+    p = clusterPoints[i]
+    best = []
+    for j in p:
+        d = get_distance(j, base)
+        if d < mini:
+            mini = d
+            best = j
+    finals.append(j)
+
+
 # final = []
 # for i in range(ncluster):
 #     min1 = 10000000000
@@ -98,27 +111,28 @@ def txEnergyChange(sink_node, optNode, energies):
         return 0
 
 
-# count = 0
+count = 0
 
-# while(2):
-#     count += 1
-#     temp = 1
-#     for i in range(len(sink_node2[0])):
-#         present_sink_node = [sink_node2[0][i], sink_node2[1][i]]
-#         min_dist = 10000000000000
-#         optNode = -1
-#         for j in range(no_of_nodes):
-#             dist = get_distance(present_sink_node, X[j])
-#             if min_dist >= dist:
-#                 min_dist = dist
-#                 optNode = j
-#         temp = txEnergyChange(present_sink_node, X[optNode], energies1)
-#         if temp == 0:
-#             break
-#     writer.writerow(list(energies1.values()))
-#     if temp == 0:
-#         break
-# print(count)
+while(2):
+    count += 1
+    temp = 1
+    for i in range(len(sink_node2[0])):
+        present_sink_node = [sink_node2[0][i], sink_node2[1][i]]
+        min_dist = 10000000000000
+        centroidMini = -1
+        for j in range(ncluster):
+            dist = get_distance(present_sink_node, clusters_centroids[i])
+            if min_dist >= dist:
+                min_dist = dist
+                centeriodMini = j
+
+        temp = txEnergyChange(present_sink_node, finals[j], energies1)
+        if temp == 0:
+            break
+    writer.writerow(list(energies1.values()))
+    if temp == 0:
+        break
+print(count)
 
 # count = 0
 
@@ -140,30 +154,31 @@ def txEnergyChange(sink_node, optNode, energies):
 #     if temp == 0:
 #         break
 # print(count)
-count = 0
-cluster_matrix = [[] for i in range(ncluster)]
+# count = 0
+# cluster_matrix = [[] for i in range(ncluster)]
 
-for i in range(no_of_nodes):
-    cluster_matrix[y[i]].append(list(X[i]))
-while(2):
-    count += 1
-    for i in range(len(sink_node1[0])):
-        present_sink_node = [sink_node1[0][i], sink_node1[1][i]]
-        min_dist = 10000000000000
-        cluster_no = -1
-        for j in range(ncluster):
-            dist = get_distance(present_sink_node, centroids[j])
-            if min_dist >= dist:
-                min_dist = dist
-                cluster_no = j
-        optimal_point = get_optimal_node(
-            present_sink_node, cluster_no, cluster_matrix, energies2, maxrange_node)
-        if optimal_point == -1:
-            break
-    writer.writerow(energies2.values())
-    if count>=100000:
-        break
-print(count)
+# for i in range(no_of_nodes):
+#     cluster_matrix[y[i]].append(list(X[i]))
+
+# while(2):
+#     count += 1
+#     for i in range(len(sink_node1[0])):
+#         present_sink_node = [sink_node1[0][i], sink_node1[1][i]]
+#         min_dist = 10000000000000
+#         cluster_no = -1
+#         for j in range(ncluster):
+#             dist = get_distance(present_sink_node, centroids[j])
+#             if min_dist >= dist:
+#                 min_dist = dist
+#                 cluster_no = j
+#         optimal_point = get_optimal_node(
+#             present_sink_node, cluster_no, cluster_matrix, energies2, maxrange_node)
+#         if optimal_point == -1:
+#             break
+#     writer.writerow(energies2.values())
+#     if count >= 100000:
+#         break
+# print(count)
 
 # count = 0
 # while(1):
