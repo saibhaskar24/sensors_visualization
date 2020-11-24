@@ -14,7 +14,7 @@ for sheet in dff.sheet_names:
 dff.close()
 
 col = ['b--', 'r--', 'm', 'y', 'k', "violet", "indigo"]
-name = ["Static Sink Path", "Proposed Sink Path"]
+name = ["Static Cluster Head", "Dynamic Cluster Path (Proposed)"]
 i = 0
 figure, axes = plt.subplots(nrows=2, ncols=5)
 for rows in axes:
