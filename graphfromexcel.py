@@ -21,6 +21,12 @@ for rows in axes:
     for ax1 in rows:
         for j in range(len(d['Node'+str(i+1)])):
             L = d['Node'+str(i+1)][j].tolist()
+            # if j %2 == 0 and i!=10:
+            lll = 0
+            for iiii in range(len(L)):
+                L[iiii]-=lll
+                lll+=0.0002
+                # print(L)
             l = []
             for I in range(0,len(L[:500]),20):
                 l.append(L[I])
