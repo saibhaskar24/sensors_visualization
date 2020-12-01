@@ -221,3 +221,38 @@ def staticSinkPath():
     y = [y for y in range(0, 31)]
     x = [(y/4)**2 for y in y]
     return [x, y]
+
+
+def optimalToOptimal(optimalNode, group, temp_dist, energies):
+    tx_energy = {}
+    max_energy = -1
+    i = 0
+
+    leng = len(group)
+    while i < leng:
+        if get_distance(group[i], optimalNode) > temp_dist:
+            group.pop(i)
+            leng -= 1
+        else:
+            i += 1
+    if len(group) == 0:
+        return optimalNode
+    for i in group:
+        tx_energy[tuple(i)] = get_energy_of_tramission(sink_node, i)
+        max_energy = max(max_energy, energies[tuple(i)])
+    c = 0
+    for i in group:
+        if energies[tuple(i)] >= tx_energy[tuple(i)]:
+            break
+        c += 1
+    if c == len(group):
+        return -1
+    optimalNode = []
+    min_tx_energy = 10000000000000000000
+    for i in tx_energy:
+        if energies[i] == max_energy:
+            if min_tx_energy >= tx_energy[i]:
+                optimalNode = list(i)
+                min_tx_energy = tx_energy[i]
+    energies[tuple(optimalNode)] -= min_tx_energy
+    return optimalNode
