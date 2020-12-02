@@ -4,7 +4,7 @@ from math import sqrt, pow
 import numpy as np
 from scipy.interpolate import make_interp_spline, BSpline, pchip_interpolate
 from scipy.spatial import ConvexHull
-
+import networkx as nx
 
 def getpathpoints(parent, n, g, centroids):
     path = [[], []]
@@ -221,3 +221,12 @@ def staticSinkPath():
     y = [y for y in range(0, 31)]
     x = [(y/4)**2 for y in y]
     return [x, y]
+
+def gengraph(points,limit):
+    G = nx.Graph()
+    for point in points:
+        for secpoint in points:
+            distance = get_distance(point, secpoint)
+            if distance > limit or distance == 0:
+                continue
+            G.add_edge(point, secpoint, weight=distance)
