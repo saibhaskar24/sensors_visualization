@@ -4,6 +4,7 @@ from math import sqrt, pow
 import numpy as np
 from scipy.interpolate import make_interp_spline, BSpline, pchip_interpolate
 from scipy.spatial import ConvexHull
+import networkx as nx
 
 
 def getpathpoints(parent, n, g, centroids):
@@ -256,3 +257,13 @@ def optimalToOptimal(optimalNode, group, temp_dist, energies):
                 min_tx_energy = tx_energy[i]
     energies[tuple(optimalNode)] -= min_tx_energy
     return optimalNode
+
+
+def gengraph(points, limit):
+    G = nx.Graph()
+    for point in points:
+        for secpoint in points:
+            distance = get_distance(point, secpoint)
+            if distance > limit or distance == 0:
+                continue
+            G.add_edge(point, secpoint, weight=distance)
