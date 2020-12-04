@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-from celluloid import Camera
 from funti import *
 
 
@@ -72,7 +71,6 @@ draw()
 plt.legend()
 
 # plt.show()
-camera = Camera(fig)
 
 
 no_of_nodes = len(X)
@@ -101,34 +99,18 @@ for i in range(len(sink_node[0])):
         if tempClusterNode not in cluster_matrix[cluster_no]:
             clusterPoints = cluster_matrix[cluster_no]
             minDist = 10000000
-            # print(clusterPoints)
             for i in clusterPoints:
                 dist = get_distance(i, tempClusterNode)
                 if minDist > dist:
                     minDist = dist
                     optimalCluster_Cluster = i
-            # print("Signal ",optimalCluster_Cluster)
-#   print(present_sink_node, optimal_point, cluster_no)
     ax.arrow(present_sink_node[0], present_sink_node[1], optimal_point[0] - present_sink_node[0],
              optimal_point[1] - present_sink_node[1], width=0.02, color='red', head_length=0.0, head_width=0.0)
     ax.scatter(present_sink_node[0], present_sink_node[1], s=10, c='red')
     ax.scatter(optimal_point[0], optimal_point[1], s=10, c='red')
-    # plt.show()
-    # fig, ax = plt.subplots(1, figsize=(7, 5))
-
-
-    camera.snap()
+    plt.show()
+    fig, ax = plt.subplots(1, figsize=(7, 5))
     draw()
 
+
 # plt.show()
-
-
-
-camera.snap()
-animation = camera.animate()
-
-print(animation)
-print("Writing ...")
-animation.save("m.mp4",fps=1)
-print("Done")
-plt.show()

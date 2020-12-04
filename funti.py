@@ -258,12 +258,36 @@ def optimalToOptimal(optimalNode, group, temp_dist, energies):
     energies[tuple(optimalNode)] -= min_tx_energy
     return optimalNode
 
+from networkx.algorithms.shortest_paths.weighted import dijkstra_path_length,dijkstra_path
 
-def gengraph(points, limit):
+def gengraph(points,limit):
     G = nx.Graph()
+    for point in points:
+        G.add_node(tuple(point),pos=tuple(point))
     for point in points:
         for secpoint in points:
             distance = get_distance(point, secpoint)
             if distance > limit or distance == 0:
                 continue
-            G.add_edge(point, secpoint, weight=distance)
+            G.add_edge(tuple(point), tuple(secpoint), weight=distance)
+    return G
+
+def interpoint(clusterpoints,limit,optimalpointincluster):
+    G = gengraph(clusterpoints,limit)
+    d = {}
+    for i in clusterpoints:
+        if optimalpointincluster != i:
+            path = dijkstra_path_length(G,optimalpointincluster,i)
+            cost = dijkstra_path(G,optimalpointincluster,i)
+            d[i] = (path,cost)
+    return d
+
+def expernalpoint(individualclusteroptimalpoints,limit,optimalpoint):
+    G = gengraph(individualclusteroptimalpoints,limit)
+    d = {}
+    for i in clusterpoints:
+        if optimalpointincluster != i:
+            path = dijkstra_path_length(G,optimalpoint,i)
+            cost = dijkstra_path(G,optimalpoint,i)
+            d[i] = (path,cost)
+    return d
