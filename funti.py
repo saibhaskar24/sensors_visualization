@@ -285,8 +285,8 @@ def interpoint(clusterpoints,limit,optimalpointincluster):
 def expernalpoint(individualclusteroptimalpoints,limit,optimalpoint):
     G = gengraph(individualclusteroptimalpoints,limit)
     d = {}
-    for i in clusterpoints:
-        if optimalpointincluster != i:
+    for i in individualclusteroptimalpoints:
+        if optimalpoint != i:
             path = dijkstra_path_length(G,optimalpoint,i)
             cost = dijkstra_path(G,optimalpoint,i)
             d[i] = (path,cost)
