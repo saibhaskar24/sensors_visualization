@@ -272,7 +272,7 @@ def gengraph(points,limit):
             G.add_edge(tuple(point), tuple(secpoint), weight=distance)
     return G
 
-def interpoint(clusterpoints,limit,optimalpointincluster):
+def interpoint(clusterpoints,limit,optimalpointincluster): #(all points in that perticular cluster,limit or range of each node, optimal point in that cluster)
     G = gengraph(clusterpoints,limit)
     d = {}
     for i in clusterpoints:
@@ -282,7 +282,7 @@ def interpoint(clusterpoints,limit,optimalpointincluster):
             d[i] = (path,cost)
     return d
 
-def expernalpoint(individualclusteroptimalpoints,limit,optimalpoint):
+def expernalpoint(individualclusteroptimalpoints,limit,optimalpoint): #(each points identified as optimal point in every cluster 1 each, limit or range of each node, the main optimal node or the point which should communicate with sink node)
     G = gengraph(individualclusteroptimalpoints,limit)
     d = {}
     for i in individualclusteroptimalpoints:
