@@ -224,20 +224,11 @@ def staticSinkPath():
     return [x, y]
 
 
-def optimalToOptimal(optimalNode, group, temp_dist, energies):
+def optimalToOptimal(optimalNode, group, temp_dist, energies,sink_node):
     tx_energy = {}
     max_energy = -1
     i = 0
 
-    leng = len(group)
-    while i < leng:
-        if get_distance(group[i], optimalNode) > temp_dist:
-            group.pop(i)
-            leng -= 1
-        else:
-            i += 1
-    if len(group) == 0:
-        return optimalNode
     for i in group:
         tx_energy[tuple(i)] = get_energy_of_tramission(sink_node, i)
         max_energy = max(max_energy, energies[tuple(i)])
@@ -255,7 +246,6 @@ def optimalToOptimal(optimalNode, group, temp_dist, energies):
             if min_tx_energy >= tx_energy[i]:
                 optimalNode = list(i)
                 min_tx_energy = tx_energy[i]
-    energies[tuple(optimalNode)] -= min_tx_energy
     return optimalNode
 
 from networkx.algorithms.shortest_paths.weighted import dijkstra_path_length,dijkstra_path
@@ -273,21 +263,24 @@ def gengraph(points,limit):
     return G
 
 def interpoint(clusterpoints,limit,optimalpointincluster): #(all points in that perticular cluster,limit or range of each node, optimal point in that cluster)
+    # print(clusterpoints,optimalpointincluster)
     G = gengraph(clusterpoints,limit)
+    # print(G.edges)
     d = {}
     for i in clusterpoints:
         if optimalpointincluster != i:
-            path = dijkstra_path_length(G,optimalpointincluster,i)
-            cost = dijkstra_path(G,optimalpointincluster,i)
-            d[i] = (path,cost)
+            path = dijkstra_path_length(G,tuple(optimalpointincluster),tuple(i))
+            cost = dijkstra_path(G,tuple(optimalpointincluster),tuple(i))
+            d[tuple(i)] = (path,cost)
     return d
 
 def expernalpoint(individualclusteroptimalpoints,limit,optimalpoint): #(each points identified as optimal point in every cluster 1 each, limit or range of each node, the main optimal node or the point which should communicate with sink node)
     G = gengraph(individualclusteroptimalpoints,limit)
+    print("G", G.edges,G.nodes)
     d = {}
     for i in individualclusteroptimalpoints:
         if optimalpoint != i:
-            path = dijkstra_path_length(G,optimalpoint,i)
-            cost = dijkstra_path(G,optimalpoint,i)
-            d[i] = (path,cost)
+            path = dijkstra_path_length(G,tuple(optimalpoint),tuple(i))
+            cost = dijkstra_path(G,tuple(optimalpoint),tuple(i))
+            d[tuple(i)] = (path,cost)
     return d

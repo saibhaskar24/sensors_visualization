@@ -104,6 +104,18 @@ for i in range(len(sink_node[0])):
                 if minDist > dist:
                     minDist = dist
                     optimalCluster_Cluster = i
+    listOfOptimals = []
+
+    for c in range(ncluster):
+        if c== cluster_no:
+            ops = optimal_point
+        else:
+            ops = list(optimalToOptimal(optimal_point,cluster_matrix[c],maxrange_node,energies,present_sink_node)) 
+        listOfOptimals.append(ops)
+        checking = interpoint(list(cluster_matrix[c]),maxrange_node,ops)
+        print(c,checking)
+    checking2 = expernalpoint(listOfOptimals,maxrange_node,optimal_point)
+    print(cluster_no,checking2)
     ax.arrow(present_sink_node[0], present_sink_node[1], optimal_point[0] - present_sink_node[0],
              optimal_point[1] - present_sink_node[1], width=0.02, color='red', head_length=0.0, head_width=0.0)
     ax.scatter(present_sink_node[0], present_sink_node[1], s=10, c='red')
