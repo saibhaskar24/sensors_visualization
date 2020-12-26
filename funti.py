@@ -276,7 +276,7 @@ def interpoint(clusterpoints,limit,optimalpointincluster): #(all points in that 
 
 def expernalpoint(individualclusteroptimalpoints,limit,optimalpoint): #(each points identified as optimal point in every cluster 1 each, limit or range of each node, the main optimal node or the point which should communicate with sink node)
     G = gengraph(individualclusteroptimalpoints,limit)
-    print("G", G.edges,G.nodes)
+    # print("G", G.edges,G.nodes)
     d = {}
     for i in individualclusteroptimalpoints:
         if optimalpoint != i:

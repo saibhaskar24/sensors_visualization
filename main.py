@@ -83,6 +83,8 @@ for i in range(no_of_nodes):
 
 tempClusterNode = [36, 5]
 
+
+tempnum = 1
 for i in range(len(sink_node[0])):
     present_sink_node = [sink_node[0][i], sink_node[1][i]]
     min_dist = 10000000000000
@@ -113,14 +115,23 @@ for i in range(len(sink_node[0])):
             ops = list(optimalToOptimal(optimal_point,cluster_matrix[c],maxrange_node,energies,present_sink_node)) 
         listOfOptimals.append(ops)
         checking = interpoint(list(cluster_matrix[c]),maxrange_node,ops)
-        print(c,checking)
+        print(c,ops,checking,'\n')
+        for eachpoint in checking.values():
+            templist = np.array(eachpoint[1])
+            plt.plot(templist[:, 0], templist[:, 1],color='aqua')
+
     checking2 = expernalpoint(listOfOptimals,maxrange_node,optimal_point)
-    print(cluster_no,checking2)
+    print(cluster_no,optimal_point,checking2)
+    for eachpoint in checking2.values():
+            templist = np.array(eachpoint[1])
+            plt.plot(templist[:, 0], templist[:, 1],color='red')
     ax.arrow(present_sink_node[0], present_sink_node[1], optimal_point[0] - present_sink_node[0],
              optimal_point[1] - present_sink_node[1], width=0.02, color='red', head_length=0.0, head_width=0.0)
     ax.scatter(present_sink_node[0], present_sink_node[1], s=10, c='red')
     ax.scatter(optimal_point[0], optimal_point[1], s=10, c='red')
-    plt.show()
+    # plt.show()
+    plt.savefig("a/fig"+str(tempnum)+"png")
+    tempnum+=1
     fig, ax = plt.subplots(1, figsize=(7, 5))
     draw()
 
